@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Kanairo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Kanairo</h1>
+        <nav class="navbar">
+            <div class="logo">
+            </div>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="compliance.html">Compliance</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="marketplace.html">Marketplace</a></li>
+          </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="dashboard">
+            <h1>Dashboard</h1>
+            <p>Welcome to your dashboard! Here you can track your transactions, view market trends, and manage your account settings.</p>
+            <a href="index.html" class="btn">Back to Home</a>
+        </section>
+        <section id="dashboard-stats">
+            <div class="stats-container">
+                <article class="stats-info">
+                    <h3 class="materials-count">2500 kg</h3>
+                    <p>Total Materials Available</p>
+                </article>
+                <article class="stats-info">
+                    <h3 class="sellers">50</h3>
+                    <p>Active Sellers</p>
+                </article>
+                <article class="stats-info">
+                    <h3 class="buyers">200</h3>
+                    <p>Active Buyers</p>
+                </article>
+                <article class="stats-info">
+                    <h3 class="hotspots">3</h3>
+                    <p>Active Hotspots</p>
+                </article>
+                <article class="stats-info">
+                    <h3 class="transactions">150</h3>
+                    <p>Transactions This Month</p>
+                </article>
+                <article class="stats-info">
+                    <h3 class="revenue">KES 500,000</h3>
+                    <p>Total Revenue This Month</p> 
+                </article>
+            </div>
+        </section>
+        <section id="inventory-overview">
+            <h2>Inventory Overview</h2>
+            <p>View and manage your inventory levels and material availability.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Material</th>
+                        <th>Quantity (kg)</th>
+                        <th>Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody id="inventory-table">
+                    <tr>
+                        <td>Plastic</td>
+                        <td>1000</td>
+                        <td>2024-06-01 10:00 AM</td>
+                    </tr>
+                    <tr>
+                        <td>Paper</td>
+                        <td>500</td>
+                        <td>2024-06-01 10:00 AM</td>
+                    </tr>
+                    <tr>
+                        <td>Metal</td>
+                        <td>1000</td>
+                        <td>2024-06-01 10:00 AM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section id="recent-transactions">
+            <h2>Recent Transactions</h2>
+            <p>View your latest transactions and their details.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Material</th>
+                        <th>Quantity (kg)</th>
+                        <th>Price (KES)</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="transactions-table">
+                    <tr>
+                        <td>TXN12345</td>
+                        <td>Plastic</td>
+                        <td>500</td>
+                        <td>KES 250,000</td>
+                        <td>2024-06-01 11:00 AM</td>
+                    </tr>
+                    <tr>
+                        <td>TXN12346</td>
+                        <td>Paper</td>
+                        <td>200</td>
+                        <td>KES 100,000</td>
+                        <td>2024-06-01 11:30 AM</td>
+                    </tr>
+                    <tr>
+                        <td>TXN12347</td>
+                        <td>Metal</td>
+                        <td>300</td>
+                        <td>KES 150,000</td>
+                        <td>2024-06-01 12:00 PM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section id="traceability">
+            <h2>Traceability</h2>
+            <div class="traceability-log">
+                <article class="traceability-entry">
+                    <h3>Material ID: MAT12345</h3>
+                    <p>Collected from Hotspot A on 2024-06-01 09:00 AM</p>
+                    <p>Processed at Facility X on 2024-06-01 10:00 AM</p>
+                    <p>Shipped to Recycler Y on 2024-06-01 11:00 AM</p>
+                </article>
+                <article class="traceability-entry">
+                    <h3>Material ID: MAT12346</h3>
+                    <p>Collected from Hotspot B on 2024-06-01 09:30 AM</p>
+                    <p>Processed at Facility Z on 2024-06-01 10:30 AM</p>
+                    <p>Shipped to Recycler W on 2024-06-01 11:30 AM</p>
+                </article>
+
+            </div>
+        </section>
+        <section id="market-trends">
+            <h2>Market Trends</h2>
+            <p>Stay updated with the latest market trends and price fluctuations for various materials.</p>
+            <!-- Placeholder for market trends graph -->
+            <div class="market-trends-graph">
+                <p>Graph coming soon...</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+    <p>&copy; <span id="current-year"></span> Kanairo. All rights reserved.</p>
+    <script>
+        // Update the current year in the footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</footer>
+</body>
+<script src="js/dashboard.js"></script>
+<script src="js/payments.js"></script>
+<script src="js/analytics.js"></script>
+</html>
