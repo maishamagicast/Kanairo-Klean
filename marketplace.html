@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarketPlace | Kanairo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Kanairo</h1>
+        <nav class="navbar">
+            <div class="logo">
+            </div>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="compliance.html">Compliance</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="marketplace.html">Marketplace</a></li>
+          </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="marketplace">
+            <h1>Marketplace</h1>
+            <p>Explore our digital marketplace connecting collectors, recyclers, and corporate clients. 
+                Discover real-time inventory, transparent pricing, and traceable supply chains.</p>
+            <a href="index.html" class="btn">Back to Home</a>
+        </section>
+        <section id="market-rates">
+            <h2>Current Market Rates</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Material</th>
+                        <th>Price per kg (KES)</th>
+                        <th>Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Plastic</td>
+                        <td>50</td>
+                        <td>2024-06-01 10:00 AM</td>
+                    </tr>
+                    <tr>
+                        <td>Paper</td>
+                        <td>30</td>
+                        <td>2024-06-01 10:00 AM</td>
+                    </tr>
+                    <tr>
+                        <td>Metal</td>
+                        <td>100</td>
+                        <td>2024-06-01 10:00 AM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section id="market-search">
+            <h2>Search Materials</h2>
+            <form>
+                <input type="text" 
+                placeholder="Search for materials..." />
+                <button type="submit">Search</button>
+            </form>
+        </section>
+        <section id="market-list">
+            <h2>Available Materials</h2>
+            <div class="material-card">
+                <h3>Plastic</h3>
+                <p>Available: 500 kg</p>
+                <p>Price: 50 KES/kg</p>
+                <p>Status: In Stock</p>
+                <p>location: Nairobi</p>
+                <button>Buy Now</button>
+            </div>
+            <div class="material-card">
+                <h3>Paper</h3>
+                <p>Available: 300 kg</p>
+                <p>Price: 30 KES/kg</p>
+                <p>Status: In Stock</p>
+                <p>location: Mombasa</p>
+                <button>Buy Now</button>
+            </div>
+            <div class="material-card"> 
+                <h3>Metal</h3>
+                <p>Available: 200 kg</p>
+                <p>Price: 100 KES/kg</p>
+                <p>Status: In Stock</p>
+                <p>location: Kisumu</p>
+                <button>Buy Now</button>
+            </div> 
+        </section>     
+            <section id="hotspots">
+                <h2>Material Hotspots</h2>
+                <div class="hotspot-card">
+                    <h3>Nairobi Central</h3>
+                    <table>
+                        <tr>
+                            <th>Location</th>
+                            <th>Material</th>
+                            <th>Available Quantity</th>
+                        </tr>
+                        <tbody class="hotspot-data">
+                            <tr>
+                                <td>Nairobi Central</td>
+                                <td>Plastic</td>
+                                <td>200 kg</td>
+                            </tr>
+                        <tr>
+                            <td>Nairobi Central</td>
+                            <td>Paper</td>
+                            <td>100 kg</td>
+                        </tr>
+                        <tr>
+                            <td>Nairobi Central</td>
+                            <td>Metal</td>
+                            <td>50 kg</td>
+                        </tr>
+                        </tbody>   
+                    </table>
+                    
+                </div>
+                <div class="hotspot-card">
+                    <h3>Mombasa Port</h3>
+                    <table>
+                        <tr>
+                            <td>Plastic: 150 kg</td>
+                            <td>Paper: 80 kg</td>
+                            <td>Metal: 30 kg</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="hotspot-card">
+                    <h3>Kisumu Market</h3>
+                    <table>
+                        <tr>
+                            <td>Plastic: 100 kg</td>
+                            <td>Paper: 50 kg</td>
+                            <td>Metal: 20 kg</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+            <section id="market-stats">
+                <h2>Market Overview</h2>
+                <div class="stats-container">
+                    <article class="stats-info">
+                        <h3>1000 kg</h3>
+                        <p>Total Materials Available</p>
+                    </article>
+                    <article class="stats-info">
+                        <h3>50</h3>
+                        <p>Active Sellers</p>
+                    </article>
+                    <article class="stats-info">
+                        <h3>200</h3>
+                        <p>Active Buyers</p>
+                    </article>
+            </section>
+        </section>
+    </main>
+    <footer>
+    <p>&copy; <span id="current-year"></span> Kanairo. All rights reserved.</p>
+    <script>
+        // Update the current year in the footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</footer>
+</body>
+<script src="js/marketplace.js"></script>
+<script src="js/inventory.js"></script>
+</html>
