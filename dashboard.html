@@ -55,6 +55,37 @@
                 </article>
             </div>
         </section>
+        <section id="update-inventory" style="margin-bottom: 2rem;">
+            <h2>Log New Material</h2>
+            <p>Yard owners can manually record new incoming materials here.</p>
+            <form id="inventory-form" style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+                <div>
+                    <label for="hotspot-input" style="display: block;">Hotspot:</label>
+                    <input type="text" id="hotspot-select" list="hotspot-list" required placeholder="Type or select..." style="padding: 0.5rem;">
+                    <datalist id="hotspot-list">
+                        <option value="Nairobi Central"></option>
+                        <option value="Mombasa Port"></option>
+                        <option value="Kisumu Market"></option>
+                    </datalist>
+                </div>
+                <div>
+                    <label for="material-input" style="display: block;">Material:</label>
+                    <input type="text" id="material-select" list="material-list" required placeholder="Type or select..." style="padding: 0.5rem;">
+                    <datalist id="material-list">
+                        <option value="Plastic (PET)"></option>
+                        <option value="Plastic (HDPE)"></option>
+                        <option value="Paper"></option>
+                        <option value="Metal"></option>
+                        <option value="E-Waste"></option>
+                    </datalist>
+                </div>
+                <div>
+                    <label for="quantity-input" style="display: block;">Quantity (kg):</label>
+                    <input type="number" id="quantity-input" min="1" required style="padding: 0.5rem;">
+                </div>
+                <button type="submit" style="padding: 0.5rem 1rem; background-color: #007bff; color: white; border: none; cursor: pointer;">Log Inventory</button>
+            </form>
+        </section>
         <section id="inventory-overview">
             <h2>Inventory Overview</h2>
             <p>View and manage your inventory levels and material availability.</p>
@@ -67,21 +98,7 @@
                     </tr>
                 </thead>
                 <tbody id="inventory-table">
-                    <tr>
-                        <td>Plastic</td>
-                        <td>1000</td>
-                        <td>2024-06-01 10:00 AM</td>
-                    </tr>
-                    <tr>
-                        <td>Paper</td>
-                        <td>500</td>
-                        <td>2024-06-01 10:00 AM</td>
-                    </tr>
-                    <tr>
-                        <td>Metal</td>
-                        <td>1000</td>
-                        <td>2024-06-01 10:00 AM</td>
-                    </tr>
+                    <!-- Populated dynamically via JS from our mock DB -->
                 </tbody>
             </table>
         </section>
@@ -158,6 +175,7 @@
     </script>
 </footer>
 </body>
+<script src="js/inventory.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="js/payments.js"></script>
 <script src="js/analytics.js"></script>
