@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Kanairo</title>
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     </head>
     <body>
       <header>
-        <h1>Kanairo</h1>
+        <h1 id="main-header">Kanairo Klean</h1>
         <nav class="navbar">
             <div class="logo">
             </div>
@@ -25,7 +25,7 @@
         <main>
             <section id="hero">
                 <div class="hero-content">
-                    <h1>Transforming waste into opportunity</h1>
+                    <h1 class="section-header">Transforming waste into opportunity</h1>
                     <p>Connecting Collectors, Corporates, Environment and Recyclers to a  transparent 
                         digital marketplace.</p>
                 <a href="marketplace.html" class="btn">
@@ -34,7 +34,7 @@
                 </div>
             </section>
             <section id="stats">
-                <h2>Impact at a glance</h2>
+                <h2 class="section-header">Impact at a glance</h2>
                 <div class="stats-container">
                     <article class="stats-info">
                         <h3>30%</h3>
@@ -51,7 +51,7 @@
                 </div>
             </section>
             <section id="works">
-                <h1>How Kanairo Works?</h1>
+                <h1 class="section-header">How Kanairo Works?</h1>
                 <div class="worksflow">
                     <article class="step">
                         <h3>1</h3>
@@ -73,7 +73,7 @@
             </section>
 
             <section id="platform-features">
-                <h3>Kanairo Features</h3>
+                <h2 class="section-header">Kanairo Features</h2>
                 <div class="features">
                     <article class="platform-f">
                         <h3>Price Discovery</h3>
@@ -90,7 +90,7 @@
                 </div>
             </section>
             <section id="users">
-                <h2>Who uses Kanairo?</h2>
+                <h2 class="section-header">Who uses Kanairo?</h2>
                 <div class="user-container">
                     <div class="user-card">Collectors</div>
                     <div class="user-card">Aggregators</div>
@@ -99,7 +99,7 @@
                 </div>
             </section>
             <section id="cta">
-                <h2>Join The Circular Economy</h2>
+                <h2 class="section-header">Join The Circular Economy</h2>
                 <p>Helps create a transparent and sustainable waste management ecosystem</p>
                 <a href="marketplace.html" class="btn">Explore Marketplace</a>
             </section>              
@@ -107,10 +107,38 @@
 
 <footer>
     <p>&copy;<span id="current-year"></span> Kanairo. All rights reserved.</p>
-    <script>
-        // Update the current year in the footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
+    <div id="progress"></div> <!-- Add this at the start of body -->
+
+<script>
+    const userCards = document.querySelectorAll('.user-card');
+    
+    // Magnetic Effect for User Cards
+    document.addEventListener('mousemove', (e) => {
+        userCards.forEach(card => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            // If mouse is within 200px, pull the card slightly
+            const dist = Math.hypot(x, y);
+            if (dist < 200) {
+                card.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px) scale(1.1)`;
+                card.style.borderColor = 'var(--primary)';
+            } else {
+                card.style.transform = ``;
+                card.style.borderColor = '';
+            }
+        });
+    });
+
+    // Staggered text reveal for Feature headers
+    const featureHeaders = document.querySelectorAll('.platform-f h3');
+    featureHeaders.forEach(header => {
+        header.innerHTML = header.innerText.split('').map(letter => 
+            `<span class="letter" style="transition: 0.3s">${letter}</span>`
+        ).join('');
+    });
+</script>
 </footer>
 </body>
 </html>

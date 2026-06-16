@@ -1,0 +1,456 @@
+:root {
+    --primary: #00ff88;
+    --bg: #0a0a0a;
+    --surface: #151515;
+    --text: #f0f0f0;
+    --card-bg: rgba(20, 20, 20, 0.7);
+    --border: rgba(255, 255, 255, 0.1);
+    --accent-glow: rgba(0, 255, 136, 0.15);
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    cursor: normal; 
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syncopate', sans-serif, system-ui;
+    overflow-x: hidden;
+    transition: background 0.5s ease;
+}
+
+/* Moving Mesh Ambient Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 50% 50%, var(--accent-glow) 0%, transparent 50%);
+    z-index: -1;
+    animation: meshMove 15s infinite alternate;
+}
+
+@keyframes meshMove {
+    0% { transform: translate(-20%, -20%); }
+    100% { transform: translate(20%, 20%); }
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem 5%;
+    z-index: 1000;
+    mix-blend-mode: difference; /* Text automatically flips contrast over elements */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Normalized Brand Headers/Logos to clean, compact top-bar dimensions */
+header h1, 
+header .logo,
+header nav h2.logo {
+    font-size: 1.2rem !important;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #fff;
+    transition: transform 0.3s ease, letter-spacing 0.3s ease;
+    user-select: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+header h1:hover, 
+header .logo:hover,
+header nav h2.logo:hover {
+    transform: skewX(-10deg);
+    letter-spacing: 5px;
+    color: var(--primary);
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+}
+
+.navbar ul, 
+header nav ul {
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+    list-style: none;
+    align-items: center;
+}
+
+.navbar a, 
+header nav ul a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+}
+
+.navbar a:hover, 
+header nav ul a:hover { 
+    color: var(--primary); 
+    letter-spacing: 4px; 
+}
+
+main {
+    padding-top: 8rem; /* Pushes content down safely so fixed header never blocks it */
+    min-height: 100vh;
+}
+
+section {
+    padding: 4rem 10%;
+    position: relative;
+    width: 100%;
+}
+
+/* Page Intro/Hero Sections (The very first section block on every inner page) */
+main > section:first-of-type {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+main > section:first-of-type h1,
+main > section:first-of-type h2 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(90deg, var(--text), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+main > section:first-of-type p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    max-width: 800px;
+    opacity: 0.8;
+}
+
+main > section:not(:first-of-type) h1,
+main > section:not(:first-of-type) h2,
+.section-header {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    position: relative;
+    display: table; /* Allows perfect auto-centering while maintaining strict element width */
+    margin: 0 auto 4rem auto;
+    text-align: center;
+    color: var(--text);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Expanding Neon Center-Aligned Underline Accent Bar */
+main > section:not(:first-of-type) h1::after,
+main > section:not(:first-of-type) h2::after,
+.section-header::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--primary);
+    box-shadow: 0 0 8px var(--primary);
+    transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Kinetic hover response for centered headings */
+main > section:not(:first-of-type) h1:hover,
+main > section:not(:first-of-type) h2:hover,
+.section-header:hover {
+    color: var(--primary);
+    letter-spacing: 6px;
+    transform: scale(1.05);
+    text-shadow: 0 0 15px var(--accent-glow);
+}
+
+main > section:not(:first-of-type) h1:hover::after,
+main > section:not(:first-of-type) h2:hover::after,
+.section-header:hover::after {
+    width: 100%;
+}
+
+/* Center-align subheadings within cards and functional logs */
+.stats-info h3, 
+.problem-card h1, 
+.solution-card h2, 
+.material-card h3, 
+.hotspot-card h3,
+.traceability-entry h3 {
+    display: block;
+    text-align: center;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+/* Master mapping for card styles across all 4 pages */
+.stats-info, 
+.problem-card, 
+.solution-card, 
+.material-card, 
+.hotspot-card,
+.traceability-entry {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    border-radius: 2px; /* Brutalist sharp-edge profile */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Card Hover Mechanics */
+.stats-info:hover, 
+.problem-card:hover, 
+.solution-card:hover, 
+.material-card:hover, 
+.hotspot-card:hover,
+.traceability-entry:hover {
+    transform: scale(1.03) rotateY(5deg);
+    border-color: var(--primary);
+    box-shadow: -8px 8px 0px var(--primary);
+}
+
+/* Triggers subheadings to lift when parent card is focused */
+.stats-info:hover h3, 
+.problem-card:hover h1, 
+.solution-card:hover h2, 
+.material-card:hover h3, 
+.hotspot-card:hover h3,
+.traceability-entry:hover h3 {
+    transform: translateY(-4px) scale(1.03);
+    color: var(--primary);
+}
+
+.stats-info p,
+.problem-card p,
+.solution-card p,
+.material-card p,
+.traceability-entry p {
+    text-align: center;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    opacity: 0.8;
+}
+
+/* Distinct styling for Nested layouts inside About page */
+.solution-card .solution-card {
+    background: rgba(0, 0, 0, 0.3);
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+}
+
+th, td {
+    padding: 1.25rem;
+    text-align: left;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--primary);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+tr {
+    transition: background 0.3s ease;
+}
+
+tr:hover {
+    background: rgba(0, 255, 136, 0.04);
+}
+
+tr:hover td {
+    color: #fff;
+}
+
+form, #contact-form {
+    max-width: 600px;
+    margin: 3rem auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--primary);
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.9rem;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+    background: #1b1b1b;
+}
+
+/* Marketplace Custom Simple Row Search Form Alignment */
+#market-search form {
+    flex-direction: row;
+    max-width: 700px;
+    gap: 1rem;
+}
+
+#market-search input {
+    flex: 1;
+}
+
+#market-search button {
+    margin: 0;
+    padding: 0 2.5rem;
+}
+
+/* Utility layout configurations for custom elements */
+ul {
+    padding-left: 1.5rem;
+}
+
+#Value-Proposition ul li {
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    list-style-type: square;
+}
+
+/* Dashboard Graph Area Spec */
+.market-trends-graph {
+    height: 300px;
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.btn, 
+button, 
+form button,
+.material-card button {
+    position: relative;
+    padding: 1.25rem 3rem;
+    background: var(--text);
+    color: var(--bg);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    border-radius: 2px;
+    margin-top: 1.5rem;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    align-self: center;
+    text-align: center;
+}
+
+.btn::before, 
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 300%; height: 300%;
+    background: var(--primary);
+    transition: transform 0.5s ease;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: -1;
+    border-radius: 50%;
+}
+
+.btn:hover, 
+button:hover { 
+    color: #000; 
+    border-radius: 50px;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn:hover::before, 
+button:hover::before { 
+    transform: translate(-50%, -50%) scale(1); 
+}
+
+
+footer {
+    padding: 4rem 10%;
+    border-top: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+footer p {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.5;
+}
