@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarketPlace | Kanairo</title>
+    <!-- <link rel="stylesheet" href="/css/styles.css"> -->
+    <link rel="icon" href="/images/garbage favicon.png" type="image/png">
+    <style>
+        :root {
+            --primary-accent: #d4af37;
+            --bg-base: #f9f8f6;
+            --panel-surface: #ffffff;
+            --text-main: #1c1b1a;
+            --soft-border: #e8e6e1;
+            --grid-color: rgba(203, 213, 225, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Playfair Display', Georgia, serif;
+            overflow-x: hidden;
+            line-height: 1.4;
+        }
+
+        main > section {
+            padding: 10rem 12% 8rem 12%;
+            position: relative;
+            border-bottom: 1px solid var(--soft-border);
+            background-color: var(--bg-base);
+        }
+
+        main > section h2 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 400;
+            letter-spacing: -1px;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        main > section > p {
+            font-size: 1.2rem;
+            opacity: 0.7;
+            margin-bottom: 3rem;
+            max-width: 700px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            background: transparent;
+            color: var(--text-main);
+            border: 2px solid var(--text-main);
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            font-family: system-ui, sans-serif;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn:hover {
+            background: var(--text-main);
+            color: var(--bg-base);
+            transform: translateY(-4px);
+        }
+
+        header {
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100%;
+            padding: 2.2rem 12%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(249, 248, 246, 0.8); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid transparent;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        header.scrolled {
+            padding: 1.2rem 12%;
+            background: rgba(249, 248, 246, 0.96);
+            border-bottom: 1px solid black;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-family: system-ui, sans-serif;
+            font-weight: 500;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+        }
+
+        .navbar ul {
+            display: flex;
+            list-style: none;
+            gap: 3.5rem;
+        }
+
+        .navbar a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: system-ui, sans-serif;
+            font-size: 0.9rem;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .navbar a:hover {
+            opacity: 1;
+        }
+
+        #marketplace {
+            min-height: 55vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            background-image: 
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        #marketplace h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 400;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+        }
+
+        #marketplace p {
+            font-size: 1.4rem;
+            max-width: 750px;
+            margin-bottom: 2rem;
+        }
+
+        #market-rates, #market-list {
+            background-color: var(--panel-surface);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-family: system-ui, sans-serif;
+        }
+
+        th {
+            text-align: left;
+            padding: 1.2rem 1rem;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            opacity: 0.5;
+            border-bottom: 2px solid var(--text-main);
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 1.8rem 1rem;
+            font-size: 1.05rem;
+            border-bottom: 1px solid var(--soft-border);
+        }
+
+        tr:hover td {
+            background: rgba(0, 0, 0, 0.01);
+        }
+
+        #market-search form {
+            display: flex;
+            gap: 1rem;
+            max-width: 600px;
+            margin-top: 1.5rem;
+        }
+
+        #market-search input {
+            flex: 1;
+            padding: 1.1rem;
+            background: var(--panel-surface);
+            border: 1px solid var(--soft-border);
+            font-family: system-ui, sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        #market-search input:focus {
+            outline: none;
+            border-color: var(--text-main);
+        }
+
+        #market-search button {
+            background: var(--text-main);
+            color: var(--bg-base);
+            border: none;
+            padding: 1.1rem 2.5rem;
+            font-family: system-ui, sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #market-search button:hover {
+            background: var(--primary-accent);
+            color: var(--text-main);
+        }
+
+        #market-stats {
+            background-color: var(--panel-surface);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .stats-info {
+            border-top: 2px solid var(--text-main);
+            padding-top: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .stats-info h3 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 300;
+            letter-spacing: -1px;
+            color: var(--text-main);
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-info p {
+            font-family: system-ui, sans-serif;
+            font-size: 0.95rem;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stats-container:hover .stats-info {
+            opacity: 0.3;
+            filter: blur(1px);
+        }
+
+        .stats-container .stats-info:hover {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(-6px);
+            border-top-color: var(--primary-accent);
+        }
+
+        
+
+        footer {
+            padding: 4rem 12%;
+            background: var(--bg-base);
+            font-family: system-ui, sans-serif;
+            font-size: 0.85rem;
+            opacity: 0.5;
+            border-top: 1px solid var(--soft-border);
+        }
+
+        #market-list, #hotspots {
+            background-color: var(--bg-base);
+        }
+
+        .material-card {
+            background: var(--panel-surface);
+            padding: 2.5rem;
+            margin-top: 2rem;
+            border-top: 3px solid var(--text-main);
+            border-left: 1px solid var(--soft-border);
+            border-right: 1px solid var(--soft-border);
+            border-bottom: 1px solid var(--soft-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .material-card h3 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .material-card p {
+            font-family: system-ui, sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+    
+        #hotspots:hover .material-card {
+            opacity: 0.3;
+            filter: blur(1px);
+        }
+
+    
+        #hotspots .material-card:hover {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateX(8px);
+            border-top-color: var(--primary-accent);
+        }
+
+    
+        #market-list .material-card {
+            opacity: 1;
+            filter: none;
+        }
+
+    
+        #market-list .material-card:hover {
+            transform: translateX(8px);
+            border-top-color: var(--primary-accent);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Kanairo Klean</h1>
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="compliance.html">Compliance</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="marketplace.html">Marketplace</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="marketplace">
+            <h1>Marketplace</h1>
+            <p>Explore our digital marketplace connecting collectors, recyclers, and corporate clients. Discover real-time inventory, transparent pricing, and traceable supply chains.</p>
+            <a href="index.html" class="btn">Back to Home</a>
+        </section>
+        
+        <section id="market-rates">
+            <h2>Current Market Rates</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Material</th>
+                        <th>Price per kg (KES)</th>
+                        <th>Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Plastic (PET)</td>
+                        <td>85</td>
+                        <td>Just now</td>
+                    </tr>
+                    <tr>
+                        <td>Plastic (HDPE)</td>
+                        <td>95</td>
+                        <td>10 mins ago</td>
+                    </tr>
+                    <tr>
+                        <td>E-Waste</td>
+                        <td>320</td>
+                        <td>1 hour ago</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section id="market-search">
+            <h2>Search Materials</h2>
+            <form>
+                <input type="text" placeholder="Search for materials..." />
+                <button type="submit">Search</button>
+            </form>
+        </section>
+        
+        <section id="market-list">
+            <h2>Available Materials</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Material Batch</th>
+                        <th>Quantity Available</th>
+                        <th>Location Hub</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PET Clear Bottles</td>
+                        <td>1,200 kg</td>
+                        <td>Nairobi Central Node</td>
+                    </tr>
+                    <tr>
+                        <td>Industrial HDPE Drums</td>
+                        <td>850 kg</td>
+                        <td>Mombasa Port Node</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>     
+        
+        <section id="hotspots">
+            <h2>Material Hotspots</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Node Location</th>
+                        <th>Primary Material Strain</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nairobi Central Aggregator</td>
+                        <td>Plastic / E-Waste</td>
+                        <td>High Liquidity</td>
+                    </tr>
+                    <tr>
+                        <td>Kisumu Market Hub</td>
+                        <td>Paper / Metal Flakes</td>
+                        <td>Steady Supply</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section id="market-stats">
+            <h2>Market Overview</h2>
+            <div class="stats-container">
+                <article class="stats-info">
+                    <h3>1,000 kg</h3>
+                    <p>Total Materials Available</p>
+                </article>
+                <article class="stats-info">
+                    <h3>50</h3>
+                    <p>Active Sellers</p>
+                </article>
+                <article class="stats-info">
+                    <h3>200</h3>
+                    <p>Active Buyers</p>
+                </article>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; <span id="current-year"></span> Kanairo. All rights reserved.</p>
+        <script>
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        </script>
+    </footer>
+</body>
+<script src="js/marketplace.js"></script>
+<script src="js/inventory.js"></script>
+<script src="js/payments.js"></script>
+</html>
