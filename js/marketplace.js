@@ -1,8 +1,10 @@
 // Builder C — Marketplace: material tabs, price panel + chart, price cards
 // (with search + real stock + Buy Now), order book, live trade feed.
-// No JSX.
+// No JSX. Material/price data is fetched via js/market-data.js; the order
+// book and price-history chart are generated algorithmically from whatever
+// price is currently selected (simulation logic, not content).
 import { Dot, Ticker, mount } from './react-shared.js';
-import { MATERIALS, simulatePrices } from './market-data.js';
+import { getMaterials, simulatePrices } from './market-data.js';
 import { getHotspots, onHotspotsChange, aggregateInventory } from './storage.js';
 import { openMpesaModal, recordTransaction, showSuccessNotification } from './payments.js';
 
@@ -37,21 +39,32 @@ function buildOrderBook(price) {
 function pad(n) { return String(n).padStart(2, '0'); }
 
 function MarketplaceApp() {
-    const [prices, setPrices] = useState(MATERIALS);
-    const [selected, setSelected] = useState(MATERIALS[0].id);
+    const [prices, setPrices] = useState([]);
+    const [selected, setSelected] = useState(null);
     const [hotspots, setHotspots] = useState(getHotspots());
     const [query, setQuery] = useState('');
     const [trades, setTrades] = useState([]);
     const chartInstance = useRef(null);
 
     useEffect(() => {
-        const iv = setInterval(() => setPrices((p) => simulatePrices(p)), 2800);
+        let alive = true;
+        getMaterials().then((m) => {
+            if (!alive) return;
+            setPrices(m);
+            setSelected(m[0].id);
+        });
+        return () => { alive = false; };
+    }, []);
+
+    useEffect(() => {
+        const iv = setInterval(() => setPrices((p) => (p.length ? simulatePrices(p) : p)), 2800);
         return () => clearInterval(iv);
     }, []);
 
     useEffect(() => onHotspotsChange(setHotspots), []);
 
     useEffect(() => {
+        if (prices.length === 0) return;
         const iv = setInterval(() => {
             const m = prices[Math.floor(Math.random() * prices.length)];
             const wt = (Math.random() * 200 + 20).toFixed(0);
@@ -62,15 +75,11 @@ function MarketplaceApp() {
         return () => clearInterval(iv);
     }, [prices]);
 
-    const selMat = prices.find((m) => m.id === selected) || prices[0];
-    const inv = aggregateInventory(hotspots);
-    const stockFor = (name) => inv.find((i) => i.name === name)?.quantity || 0;
-    const filtered = prices.filter((m) => (m.id + m.name).toLowerCase().includes(query.toLowerCase()));
-
     useEffect(() => {
-        if (!window.Chart) return;
+        if (!window.Chart || !selected || prices.length === 0) return;
         const ctx = document.getElementById('mkt-price-chart');
         if (!ctx) return;
+        const selMat = prices.find((m) => m.id === selected) || prices[0];
         const history = buildPriceHistory(selMat.price);
         if (chartInstance.current) chartInstance.current.destroy();
         chartInstance.current = new window.Chart(ctx, {
@@ -94,6 +103,13 @@ function MarketplaceApp() {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selected]);
+
+    if (prices.length === 0 || !selected) return null;
+
+    const selMat = prices.find((m) => m.id === selected) || prices[0];
+    const inv = aggregateInventory(hotspots);
+    const stockFor = (name) => inv.find((i) => i.name === name)?.quantity || 0;
+    const filtered = prices.filter((m) => (m.id + m.name).toLowerCase().includes(query.toLowerCase()));
 
     function buyNow(m) {
         const stock = stockFor(m.name);

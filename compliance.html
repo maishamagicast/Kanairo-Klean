@@ -51,32 +51,7 @@
                 </div>
                 <div class="reveal reveal-r">
                     <span class="eyebrow">— Regulatory Timeline</span>
-                    <div class="timeline">
-                        <div class="timeline-item done">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-date">Jan 2025</div>
-                            <h4>EPR Regulations Published</h4>
-                            <p>Kenya's NEMA publishes the Extended Producer Responsibility regulations under the Sustainable Waste Management Act 2022.</p>
-                        </div>
-                        <div class="timeline-item done">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-date">Jul 2025</div>
-                            <h4>Industry Consultation Period</h4>
-                            <p>Manufacturers, importers, and recyclers submit compliance roadmaps to NEMA. Documentation requirements clarified.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-date">Jan 2026 →</div>
-                            <h4>Compliance Framework Active</h4>
-                            <p>EPR obligations take effect. Companies must demonstrate material recovery chains with verified documentation.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-date">Jul 2026 →</div>
-                            <h4>First Annual Audit Cycle</h4>
-                            <p>NEMA conducts first compliance audits. Non-compliant entities face levies of up to KES 5M per quarter.</p>
-                        </div>
-                    </div>
+                    <div class="timeline" id="timeline-root"></div>
                 </div>
             </div>
         </section>
@@ -86,38 +61,7 @@
                 <span class="eyebrow">— What Kanairo Provides</span>
                 <h2 class="section-header">Built-In Compliance,<br>Not Bolted On.</h2>
             </div>
-            <div class="feature-grid">
-                <article class="feature-card k-card reveal d1">
-                    <span class="feature-check">✓</span>
-                    <h3>Verified Weight Logs</h3>
-                    <p>Every weighing event at a Micro-Hub creates a timestamped, tamper-evident digital record — admissible as EPR compliance documentation.</p>
-                </article>
-                <article class="feature-card k-card reveal d2">
-                    <span class="feature-check">✓</span>
-                    <h3>Chain-of-Custody Trail</h3>
-                    <p>From street collector to industrial recycler, every handoff is recorded and attributable to a specific licensed entity.</p>
-                </article>
-                <article class="feature-card k-card reveal d3">
-                    <span class="feature-check">✓</span>
-                    <h3>Automated EPR Reports</h3>
-                    <p>Generate quarterly EPR compliance reports from your transaction history in one click — no manual data aggregation required.</p>
-                </article>
-                <article class="feature-card k-card reveal d1">
-                    <span class="feature-check">✓</span>
-                    <h3>Material Traceability at 100%</h3>
-                    <p>Every kilogram of material is traceable back to its source neighbourhood, collector ID, and weighing station.</p>
-                </article>
-                <article class="feature-card k-card reveal d2">
-                    <span class="feature-check">✓</span>
-                    <h3>Real-Time Compliance Dashboard</h3>
-                    <p>Live view of your recovery volumes against EPR targets, so you always know where you stand before the audit.</p>
-                </article>
-                <article class="feature-card k-card reveal d3">
-                    <span class="feature-check">✓</span>
-                    <h3>NEMA-Ready Export</h3>
-                    <p>Export compliance packs in the exact format required by Kenya's NEMA portal — no formatting or data cleaning needed.</p>
-                </article>
-            </div>
+            <div class="feature-grid" id="features-root"></div>
         </section>
 
         <section id="compliance-cta">
@@ -152,5 +96,6 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="js/reveal.js"></script>
+    <script type="module" src="js/compliance.js"></script>
 </body>
 </html>

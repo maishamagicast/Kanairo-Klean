@@ -3,12 +3,15 @@
 // kanairo_hotspots store via js/storage.js — no JSX.
 import { mount } from './react-shared.js';
 import { getHotspots, saveHotspots, onHotspotsChange, aggregateInventory } from './storage.js';
+import { getMaterials, getHotspotShowcase } from './market-data.js';
 
 const h = window.React.createElement;
 const { useState, useEffect } = window.React;
 
-// Same names as market-data.js's MATERIALS, so Marketplace stock lookups
-// and Dashboard logging both refer to the same materials.
+// Colors are a display concern, not content, so this stays a local map —
+// the actual material *names* come from data/site-data.json (via
+// getMaterials()) so Marketplace stock lookups and Dashboard logging always
+// refer to the same list.
 const MATERIAL_COLORS = {
     'PET Plastic': '#22c55e',
     'HDPE Plastic': '#16a34a',
@@ -17,9 +20,6 @@ const MATERIAL_COLORS = {
     'Aluminium': '#86efac',
     'Clear Glass': '#3f6b46',
 };
-
-const HOTSPOT_NAMES = ['Nairobi Central', 'Mombasa Port', 'Kisumu Market', 'Dandora', 'Gikomba', 'Industrial Area', 'Eastleigh', 'Ruiru'];
-const MATERIAL_NAMES = ['PET Plastic', 'HDPE Plastic', 'E-Waste', 'Cardboard', 'Aluminium', 'Clear Glass'];
 
 function MaterialMix() {
     const [hotspots, setHotspots] = useState(getHotspots());
@@ -70,10 +70,19 @@ function InventoryBars() {
 }
 
 function LogMaterialForm() {
+    const [hotspotNames, setHotspotNames] = useState([]);
+    const [materialNames, setMaterialNames] = useState([]);
     const [hotspot, setHotspot] = useState('');
     const [material, setMaterial] = useState('');
     const [qty, setQty] = useState('');
     const [status, setStatus] = useState('');
+
+    useEffect(() => {
+        let alive = true;
+        getHotspotShowcase().then((hs) => { if (alive) setHotspotNames(hs.map((h) => h.name)); });
+        getMaterials().then((m) => { if (alive) setMaterialNames(m.map((x) => x.name)); });
+        return () => { alive = false; };
+    }, []);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -102,7 +111,7 @@ function LogMaterialForm() {
                     placeholder: 'Type or select…', value: hotspot,
                     onChange: (e) => setHotspot(e.target.value),
                 }),
-                h('datalist', { id: 'hotspot-list' }, HOTSPOT_NAMES.map((n) => h('option', { key: n, value: n })))
+                h('datalist', { id: 'hotspot-list' }, hotspotNames.map((n) => h('option', { key: n, value: n })))
             ),
             h('div', { className: 'dash-form-field' },
                 h('label', { htmlFor: 'material-select' }, 'Material'),
@@ -111,7 +120,7 @@ function LogMaterialForm() {
                     placeholder: 'Type or select…', value: material,
                     onChange: (e) => setMaterial(e.target.value),
                 }),
-                h('datalist', { id: 'material-list' }, MATERIAL_NAMES.map((n) => h('option', { key: n, value: n })))
+                h('datalist', { id: 'material-list' }, materialNames.map((n) => h('option', { key: n, value: n })))
             ),
             h('div', { className: 'dash-form-field' },
                 h('label', { htmlFor: 'quantity-input' }, 'Quantity (kg)'),

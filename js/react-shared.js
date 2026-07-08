@@ -2,7 +2,7 @@
 // Components are plain functions returning React.createElement(...).
 // Import from a page-specific script with:
 //   import { Dot, Pill, Ticker, mount } from './react-shared.js';
-import { MATERIALS, simulatePrices } from './market-data.js';
+import { getMaterials, simulatePrices } from './market-data.js';
 
 const h = window.React.createElement;
 const { useState, useEffect } = window.React;
@@ -20,12 +20,20 @@ export function Pill({ status }) {
 
 // The scrolling price ticker — used on Home and reused as-is on Marketplace.
 export function Ticker() {
-    const [prices, setPrices] = useState(MATERIALS);
+    const [prices, setPrices] = useState([]);
 
     useEffect(() => {
-        const iv = setInterval(() => setPrices((p) => simulatePrices(p)), 2800);
+        let alive = true;
+        getMaterials().then((m) => { if (alive) setPrices(m); });
+        return () => { alive = false; };
+    }, []);
+
+    useEffect(() => {
+        const iv = setInterval(() => setPrices((p) => (p.length ? simulatePrices(p) : p)), 2800);
         return () => clearInterval(iv);
     }, []);
+
+    if (prices.length === 0) return null;
 
     const items = [...prices, ...prices, ...prices];
 

@@ -3,6 +3,7 @@
 // form; Builder C (Marketplace) and Builder A (Home) read from it for live
 // rates/stock. Same shape js/inventory.js already uses:
 //   [{ name: string, materials: [{ name: string, quantity: number }] }]
+import { loadSiteData } from './data-loader.js';
 
 const KEY = 'kanairo_hotspots';
 const LOCAL_EVENT = 'kanairo:hotspots-changed';
@@ -61,4 +62,16 @@ export function deductInventory(materialName, quantity) {
         }
     }
     saveHotspots(hotspots);
+}
+
+// First-ever visit: seed a starting inventory from data/site-data.json so
+// the Marketplace isn't showing "Out of Stock" on every single card before
+// anyone has logged anything on the Dashboard. Real user edits (via the Log
+// Material form or a purchase) always take over from here.
+if (localStorage.getItem(KEY) === null) {
+    loadSiteData().then((data) => {
+        if (localStorage.getItem(KEY) === null && data.defaultHotspots) {
+            saveHotspots(data.defaultHotspots);
+        }
+    });
 }

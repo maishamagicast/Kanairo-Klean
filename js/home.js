@@ -1,18 +1,29 @@
-// Builder A — Home page React islands: the price ticker, the live-rate
-// cards grid, and the stakeholder tabs. No JSX — React.createElement only.
+// Builder A — Home page. Ticker, rate cards, and stakeholder tabs are React
+// islands; How It Works / Impact / Hotspots preview are static content
+// rendered from fetched data with plain DOM calls (no state, no React
+// needed). No JSX anywhere.
 import { Dot, Ticker, mount } from './react-shared.js';
-import { MATERIALS, simulatePrices } from './market-data.js';
+import { getMaterials, simulatePrices, getHotspotShowcase } from './market-data.js';
+import { loadSiteData } from './data-loader.js';
 
 const h = window.React.createElement;
 const { useState, useEffect } = window.React;
 
 function RateCards() {
-    const [prices, setPrices] = useState(MATERIALS);
+    const [prices, setPrices] = useState([]);
 
     useEffect(() => {
-        const iv = setInterval(() => setPrices((p) => simulatePrices(p)), 2800);
+        let alive = true;
+        getMaterials().then((m) => { if (alive) setPrices(m); });
+        return () => { alive = false; };
+    }, []);
+
+    useEffect(() => {
+        const iv = setInterval(() => setPrices((p) => (p.length ? simulatePrices(p) : p)), 2800);
         return () => clearInterval(iv);
     }, []);
+
+    if (prices.length === 0) return null;
 
     return h('div', { className: 'rates-grid' },
         prices.map((m) => h('div', { className: 'rate-card', key: m.id },
@@ -35,42 +46,27 @@ function RateCards() {
     );
 }
 
-const STAKEHOLDER_TABS = {
-    collector: {
-        label: 'Collector',
-        headline: 'Know your worth\nbefore you sell.',
-        body: "Access live market rates from any feature phone. No middlemen, no arbitrary prices. Your materials, your price — direct to verified Micro-Hubs.",
-        stats: [{ v: '+30%', l: 'avg. earnings' }, { v: '30s', l: 'M-Pesa payout' }, { v: '0', l: 'broker fees' }],
-        rows: [['14:32', 'PET Plastic', '12.4 kg', 'KES 353'], ['13:18', 'HDPE', '8.2 kg', 'KES 287'], ['11:45', 'Aluminium', '3.1 kg', 'KES 264'], ['09:20', 'Cardboard', '22 kg', 'KES 264']],
-    },
-    aggregator: {
-        label: 'Micro-Hub',
-        headline: 'Be the digital node\nfor your neighbourhood.',
-        body: 'Aggregate materials from hundreds of collectors. Manage live inventory, post buy offers, and connect directly with industrial recyclers.',
-        stats: [{ v: '500+', l: 'collectors/hub' }, { v: '100%', l: 'traceability' }, { v: 'EPR', l: 'compliance' }],
-        rows: [['14:45', 'PET — 124 kg (3)', 'Dandora', 'KES 3,534'], ['13:00', 'E-WASTE — 41 kg', 'Industrial', 'KES 4,920'], ['11:30', 'ALU — 89 kg (7)', 'Eastleigh', 'KES 7,565'], ['09:00', 'HDPE — 210 kg (12)', 'Gikomba', 'KES 7,350']],
-    },
-    recycler: {
-        label: 'Recycler',
-        headline: 'Predictable supply.\nZero supply shocks.',
-        body: 'Browse verified inventory across the city. Lock in material contracts before collection day. Full chain-of-custody for EPR compliance.',
-        stats: [{ v: '100%', l: 'traceability' }, { v: '48h', l: 'supply forecast' }, { v: '2026', l: 'EPR built-in' }],
-        rows: [['Active', 'PET Contract', '2,400 kg/wk', 'KES 68,400'], ['Active', 'HDPE Contract', '1,100 kg/wk', 'KES 38,500'], ['Pending', 'E-Waste Bid', '500 kg/wk', 'KES 60,000'], ['Closed', 'ALU Contract', '800 kg/wk', 'KES 68,000']],
-    },
-};
-
 function StakeholderTabs() {
+    const [tabs, setTabs] = useState(null);
     const [active, setActive] = useState('collector');
-    const tab = STAKEHOLDER_TABS[active];
+
+    useEffect(() => {
+        let alive = true;
+        loadSiteData().then((data) => { if (alive) setTabs(data.home.stakeholderTabs); });
+        return () => { alive = false; };
+    }, []);
+
+    if (!tabs) return null;
+    const tab = tabs[active];
 
     return h('div', null,
         h('div', { className: 'stake-tabs' },
-            Object.keys(STAKEHOLDER_TABS).map((key) => h('button', {
+            Object.keys(tabs).map((key) => h('button', {
                 key,
                 type: 'button',
                 className: `stake-tab${active === key ? ' on' : ''}`,
                 onClick: () => setActive(key),
-            }, STAKEHOLDER_TABS[key].label))
+            }, tabs[key].label))
         ),
         h('div', { className: 'stake-body' },
             h('div', null,
@@ -100,8 +96,62 @@ mount(Ticker, 'ticker-root');
 mount(RateCards, 'rates-root');
 mount(StakeholderTabs, 'stakeholder-tabs-root');
 
-// Plain-JS bits that don't need React
+// --- Static sections rendered from fetched data, plain DOM (no React) ---
+
+function renderHowItWorks(steps) {
+    const root = document.getElementById('how-it-works-root');
+    if (!root) return;
+    steps.forEach((step, i) => {
+        const article = document.createElement('article');
+        article.className = `step reveal d${i + 1}`;
+        article.innerHTML = `
+            <div class="step-num">${step.num}</div>
+            <div class="step-icon">${step.icon}</div>
+            <h3>${step.title}</h3>
+            <p>${step.body}</p>
+        `;
+        root.appendChild(article);
+    });
+}
+
+function renderImpact(stats) {
+    const root = document.getElementById('impact-root');
+    if (!root) return;
+    stats.forEach((stat, i) => {
+        const article = document.createElement('article');
+        article.className = `impact-blk reveal d${i + 1}`;
+        article.innerHTML = `
+            <span class="impact-val">${stat.value}</span>
+            <p>${stat.label}</p>
+        `;
+        root.appendChild(article);
+    });
+}
+
+function renderHotspotsPreview(hotspots) {
+    const root = document.getElementById('hotspots-preview-root');
+    if (!root) return;
+    hotspots.forEach((hs, i) => {
+        const article = document.createElement('article');
+        article.className = `hotspot-tile k-card reveal d${(i % 4) + 1}`;
+        article.innerHTML = `
+            <div class="hotspot-tile-head"><span>${hs.name}</span><span class="ldot${hs.active ? '' : ' off'}"></span></div>
+            <p class="hotspot-tile-mat">${hs.material}</p>
+            <div class="hotspot-tile-row"><span>Activity</span><span class="hotspot-tile-pct">${hs.activity}%</span></div>
+            <div class="hotspot-bar"><span style="width:${hs.activity}%"></span></div>
+            <div class="hotspot-tile-row"><span>In Stock</span><span>${hs.stock.toLocaleString()} kg</span></div>
+        `;
+        root.appendChild(article);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    loadSiteData().then((data) => {
+        renderHowItWorks(data.home.howItWorks);
+        renderImpact(data.home.impact);
+    });
+    getHotspotShowcase().then(renderHotspotsPreview);
+
     const waitlistForm = document.getElementById('waitlist-form');
     if (waitlistForm) {
         waitlistForm.addEventListener('submit', (e) => {
