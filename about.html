@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | Kanairo</title>
 
-    <!-- <link rel="stylesheet" href="/css/styles.css"> -->
     <link rel="icon" href="/images/garbage favicon.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
@@ -24,154 +22,89 @@
                 <li><a href="marketplace.html">Marketplace</a></li>
             </ul>
         </nav>
-        <button class="topbar-icon" type="button" aria-label="System status">
-            <span class="material-symbols-outlined">sensors</span>
-        </button>
     </header>
 
     <main>
-        <section id="about-Kanairo">
-            <h1>About us</h1>
-            <p>
-                Kanairo is a specialized digital marketplace designed to formalize Nairobi’s
-                informal waste sector. By transforming physical waste into a traceable digital
-                asset, the platform bridges the gap between independent collectors 
-                and industrial recycling plants. The app replaces inefficient brokerage with a real-time 
-                inventory system, ensuring price transparency and financial liquidity.
-            </p>
+        <section id="about-hero" class="content-hero">
+            <span class="eyebrow reveal">— Our Mission</span>
+            <h1 class="section-header content-hero-title reveal d1">Formalising<br><span class="accent">Nairobi's</span><br>Waste Economy</h1>
+            <p class="content-hero-sub reveal d2">Kanairo was built on a simple belief: the people doing the
+                hardest work in Nairobi's recycling chain deserved the best price, instantly. We're replacing
+                asymmetric information with radical transparency.</p>
         </section>
 
-        <section id="Core-Problem">
-            <h2>Core Challenges & System Architecture</h2>
-
-            <article class="problem-card">
-                <h3>1. Asymmetric Information:</h3>
-                <p>Collectors sell materials at arbitrary prices due to a lack of market data.</p>
-            </article>
-
-            <article class="problem-card">
-                <h3>2. Liquidity Delays:</h3>
-                <p>Independent collectors face significant gaps in receiving payments.</p>
-            </article>
-
-            <article class="problem-card">
-                <h3>3. Unpredictable Supply:</h3>
-                <p>Industrial recyclers suffer from frequent supply shocks.</p>
-            </article>
-
-            <article class="problem-card">
-                <h3>4. Inefficient Brokerage:</h3>
-                <p>The current waste economy relies on manual, inefficient middleman structures.</p>
-            </article>
-
-            <article class="problem-card">
-                <h3>5. Customer Segments:</h3>
-                <p>Primary Users (Nodes): Local aggregators and yard owners who act as digital nodes. Beneficiaries: Thousands of independent street-level collectors.</p>
-            </article>
-
-            <article class="problem-card">
-                <h3>6. Industrial Clients:</h3>
-                <p>Recycling plants requiring steady, traceable supply chains. Corporate Clients: Companies requiring Extended Producer Responsibility (EPR) compliance.</p>
-            </article>
-
-            <div class="solution-card">
-                <h3>Kanairo's Solution:</h3>
-                <p>Kanairo solves this through:</p>
-
-                <article class="solution-card">
-                    <h4><strong>1. Price Discovery:</strong></h4>
-                    <p>Real-time market rates for PET, HDPE, and E-Waste.</p>
-                </article>
-
-                <article class="solution-card">
-                    <h4><strong>2. Verified Inventory:</strong></h4>
-                    <p>Digital logging of Material Hotspots across the city.</p>
-                </article>
-
-                <article class="solution-card">
-                    <h4><strong>3. Instant Settlement:</strong></h4>
-                    <p>Automated M-Pesa payouts triggered at the point of weight verification.</p>
-                </article>
+        <section id="mission-stats">
+            <div class="impact-grid">
+                <article class="impact-blk reveal d1"><span class="impact-val">8,000+</span><p>Active collectors across Nairobi</p></article>
+                <article class="impact-blk reveal d2"><span class="impact-val">23</span><p>Verified Micro-Hubs onboarded</p></article>
+                <article class="impact-blk reveal d3"><span class="impact-val">KES 4M</span><p>Paid out to collectors in beta</p></article>
+                <article class="impact-blk reveal d4"><span class="impact-val">6</span><p>Industrial recyclers connected</p></article>
             </div>
         </section>
 
-        <section id="User-Architecture">
-            <h2>User Architecture: The Proxy Model</h2>
-            <p>
-                To address the device gap among street-level collectors, Kanairo utilizes a 
-                <strong>"Micro-Hub" strategy.</strong> Local aggregators (yard owners) serve as the primary
-                app users, acting as digital nodes for thousands of collectors.
-            </p>
-            <p>
-                <strong>Key Metric:</strong> By digitizing these nodes, Kanairo creates a verified paper trail necessary
-                for Extended Producer Responsibility (EPR) compliance, turning environmental
-                cleanup into a tracked industrial supply chain.
-            </p>
+        <section id="problem-solution">
+            <div class="ps-grid">
+                <div class="reveal">
+                    <span class="eyebrow problem-eyebrow">— The Problem</span>
+                    <h2 class="section-header">Asymmetric Information. Liquidity Delays.</h2>
+                    <p class="ps-copy">Nairobi's 60,000+ informal waste collectors face an unfair market.
+                        Brokers control price information, taking margins of 30–60% by exploiting information
+                        asymmetry between collectors and recyclers.</p>
+                    <p class="ps-copy">Collectors wait days — sometimes weeks — for payment. Recyclers face
+                        unpredictable supply. The system punishes everyone except the middleman.</p>
+                </div>
+                <div class="reveal reveal-r">
+                    <span class="eyebrow">— The Solution</span>
+                    <h2 class="section-header">Radical Transparency. Instant Settlement.</h2>
+                    <div class="solution-list">
+                        <div class="solution-item">
+                            <span class="solution-icon">📊</span>
+                            <div><h4>Price Discovery</h4><p>Live exchange rates for all material types, visible to every participant in the chain.</p></div>
+                        </div>
+                        <div class="solution-item">
+                            <span class="solution-icon">⚖</span>
+                            <div><h4>Verified Weight</h4><p>Digital weight logs at certified Micro-Hubs eliminate disputes at point of transaction.</p></div>
+                        </div>
+                        <div class="solution-item">
+                            <span class="solution-icon">💳</span>
+                            <div><h4>Instant M-Pesa</h4><p>Automated settlement the moment weight is confirmed — no waiting, no chasing payments.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section id="Market-Impact">
-            <h2>Market Impact</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>STAKEHOLDER</th>
-                        <th>VALUE PROPOSITION</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Collectors</strong></td>
-                        <td>Up to 30% increase in earnings via direct fair market rates.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Corporates</strong></td>
-                        <td>Streamlined EPR compliance with verifiable waste recovery data.</td>
-                    </tr>
-                    <tr>    
-                        <td><strong>Environment</strong></td>
-                        <td>Reduced landfill pressure through incentivized urban recovery.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Recyclers</strong></td>
-                        <td>Predictable supply chains and 100% material traceability.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <section id="Future-Vision">
-            <h2>Future Vision</h2>
-            <p>
-                By 2032, Kanairo aims to formalize Nairobi’s informal waste sector, creating a 
-                transparent, efficient marketplace that benefits collectors, recyclers, and the environment. 
-                The platform's success will be measured by increased collector earnings, improved supply chain 
-                reliability for recyclers, and significant reductions in landfill waste.
-            </p>
-        </section>
-        
-        <section id="Value-Proposition">
-            <h2>Value Proposition</h2>
-            <p>
-                Kanairo provides a comprehensive solution that addresses the challenges of the
-                informal waste sector by creating a transparent, efficient marketplace for all stakeholders.
-            </p>
-            <h3>Why Choose Kanairo?</h3>
-            <p>
-                Kanairo stands out by offering:
-            </p>
-            <ul>
-                <li>A unique combination of real-time price discovery.</li>
-                <li>Verified inventory tracking.</li>
-                <li>Instant settlement mechanisms.</li>
-                <li>EPR compliance support.</li>
-                <li>Environmental impact reduction.</li>
-                <li>Empowerment of street-level collectors.</li>
-                <li>Reliable supply chains for recyclers.</li>
-                <li>Transparent, efficient waste management system.</li>
-            </ul>
-            <p>
-                This ensures that all stakeholders benefit from a fair, transparent, and efficient waste management system.
-            </p>
+        <section id="team">
+            <div class="reveal" style="margin-bottom: 2.5rem;">
+                <span class="eyebrow">— The Team</span>
+                <h2 class="section-header">Built In Nairobi</h2>
+            </div>
+            <div class="team-grid">
+                <article class="team-card k-card reveal d1">
+                    <div class="team-avatar">AO</div>
+                    <h3>Amara Osei</h3>
+                    <p class="team-role">CEO &amp; Co-Founder</p>
+                    <p class="team-bio">Former waste-sector logistics lead with 8 years scaling circular economy ops across East Africa.</p>
+                </article>
+                <article class="team-card k-card reveal d2">
+                    <div class="team-avatar">KN</div>
+                    <h3>Kamau Njoroge</h3>
+                    <p class="team-role">CTO &amp; Co-Founder</p>
+                    <p class="team-bio">Ex-Safaricom engineer. Built M-Pesa integrations at scale. Obsessed with last-mile fintech.</p>
+                </article>
+                <article class="team-card k-card reveal d3">
+                    <div class="team-avatar">FM</div>
+                    <h3>Fatuma Mohamed</h3>
+                    <p class="team-role">Head of Partnerships</p>
+                    <p class="team-bio">Connected 200+ recycling facilities to digital marketplaces across the continent.</p>
+                </article>
+                <article class="team-card k-card reveal d4">
+                    <div class="team-avatar">PW</div>
+                    <h3>Peter Waweru</h3>
+                    <p class="team-role">Head of Field Ops</p>
+                    <p class="team-bio">Spent 5 years on the ground in Nairobi's Micro-Hub network before joining Kanairo.</p>
+                </article>
+            </div>
         </section>
 
         <section id="contact">
@@ -181,12 +114,12 @@
             <form id="contact-form">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" value="John Doe" required>
-                
+
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" value="john.doe@example.com" required>
 
                 <label for="message">Message:</label>
-                <textarea id="message" name="message" rows="5" required>Write your message here...</textarea>       
+                <textarea id="message" name="message" rows="5" required>Write your message here...</textarea>
                 <button type="submit">Send Message</button>
             </form>
         </section>

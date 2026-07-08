@@ -71,26 +71,6 @@
 .dash-user-name { font-size: 0.78rem; color: var(--on-surface); }
 .dash-user-role { font-family: var(--font-mono); font-size: 0.55rem; color: var(--outline); text-transform: uppercase; letter-spacing: 0.05em; }
 
-.sidebar-lnk {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 10px;
-    border-radius: 2px;
-    font-size: 0.8rem;
-    color: var(--outline);
-    background: transparent;
-    border: 1px solid transparent;
-    width: 100%;
-    text-align: left;
-    margin-bottom: 2px;
-    cursor: pointer;
-    font-family: var(--font-body);
-}
-
-.sidebar-lnk:hover { background: rgba(34, 197, 94, 0.08); }
-.sidebar-lnk.on { background: rgba(34, 197, 94, 0.1); color: var(--primary); border-color: rgba(34, 197, 94, 0.15); }
-
 .sidebar-rate-row {
     display: flex;
     justify-content: space-between;
@@ -234,6 +214,7 @@
 
 @media (max-width: 980px) {
     .dash-shell { grid-template-columns: 1fr; }
+    .dash-sidebar, .dash-main { min-width: 0; }
     .dash-sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--outline-variant); }
     .dash-row-2, .dash-row-1-2 { grid-template-columns: 1fr; }
 }
