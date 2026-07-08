@@ -7,343 +7,27 @@
 
     <!-- <link rel="stylesheet" href="/css/styles.css"> -->
     <link rel="icon" href="/images/garbage favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     
-    <style>
-        :root {
-            --primary-accent: #d4af37; 
-            --bg-base: #f9f8f6;       
-            --panel-surface: #ffffff;  
-            --text-main: #1c1b1a;      
-            --soft-border: #e8e6e1;    
-            --grid-color: rgba(203, 213, 225, 0.6); 
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            font-family: 'Playfair Display', Georgia, serif;
-            overflow-x: hidden;
-            line-height: 1.4;
-        }
-
-        
-        main > section {
-            padding: 10rem 12% 8rem 12%;
-            position: relative;
-            border-bottom: 1px solid var(--soft-border);
-            background-color: var(--bg-base);
-        }
-
-        main > section h1 {
-            font-size: clamp(2rem, 4vw, 3.2rem);
-            font-weight: 400;
-            letter-spacing: -1px;
-            margin-bottom: 3rem;
-            text-align: left;
-        }
-
-        
-        header {
-            position: fixed;
-            top: 0; 
-            left: 0; 
-            width: 100%;
-            padding: 2.2rem 12%;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(249, 248, 246, 0.8); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid transparent;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        header.scrolled {
-            padding: 1.2rem 12%;
-            background: rgba(249, 248, 246, 0.96);
-            border-bottom: 1px solid black;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
-        }
-
-        header h1 {
-            font-size: 1.5rem;
-            font-family: system-ui, sans-serif;
-            font-weight: 500;
-            letter-spacing: 10px;
-            text-transform: uppercase;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 3.5rem;
-        }
-
-        nav a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-family: system-ui, sans-serif;
-            font-size: 0.9rem;
-            opacity: 0.6;
-            transition: opacity 0.3s ease;
-        }
-
-        nav a:hover {
-            opacity: 1;
-        }
-
-        #about-Kanairo {
-            min-height: 60vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background-image: 
-                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-
-        #about-Kanairo p {
-            font-size: 1.5rem;
-            line-height: 1.6;
-            max-width: 800px;
-            color: var(--text-main);
-            opacity: 0.9;
-        }
-
-        #Core-Problem {
-            background-color: var(--panel-surface);
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2.5rem;
-        }
-
-        #Core-Problem h1 {
-            grid-column: 1 / -1;
-            margin-bottom: 2rem;
-        }
-
-        .problem-card {
-            border-top: 2px solid var(--text-main);
-            padding-top: 1.5rem;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .problem-card h1 {
-            font-family: system-ui, sans-serif;
-            font-size: 1.1rem !important;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0;
-        }
-
-        .problem-card p {
-            font-size: 1.2rem;
-            opacity: 0.7;
-        }
-
-        
-        #Core-Problem:hover .problem-card {
-            opacity: 0.3;
-            filter: blur(1px);
-        }
-
-        #Core-Problem .problem-card:hover {
-            opacity: 1;
-            filter: blur(0);
-            transform: translateY(-6px);
-        }
-
-        .solution-card {
-            grid-column: 1 / -1;
-            font-size: 19.2px;
-            letter-spacing: 1px;
-            background: var(--bg-base);
-            padding: 3.5rem;
-            margin-top: 3rem;
-            border-left: 4px solid var(--primary-accent);
-        }
-
-        .solution-card h2 {
-            font-weight: 400;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .solution-card article.solution-card {
-            background: transparent;
-            padding: 1.5rem 0 0 0;
-            border: none;
-            margin-top: 1.5rem;
-            border-top: 1px solid var(--soft-border);
-        }
-
-        .solution-card article.solution-card h2 {
-            font-family: system-ui, sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-
-        
-        #User-Architecture p, #Value-Proposition p {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin-bottom: 2rem;
-        }
-
-        #Value-Proposition ul {
-            list-style: none;
-            margin: 2rem 0;
-        }
-
-        #Value-Proposition ul li {
-            font-size: 1.2rem;
-            padding: 0.5rem 0 0.5rem 1.5rem;
-            position: relative;
-        }
-
-        #Value-Proposition ul li::before {
-            content: "—";
-            position: absolute;
-            left: 0;
-            color: var(--primary-accent);
-        }
-
-        
-        #Market-Impact table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 2rem;
-            font-family: system-ui, sans-serif;
-        }
-
-        th {
-            text-align: left;
-            padding: 1.5rem 1rem;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            opacity: 0.5;
-            border-bottom: 2px solid var(--text-main);
-        }
-
-        td {
-            padding: 2rem 1rem;
-            font-size: 1.1rem;
-            border-bottom: 1px solid var(--soft-border);
-        }
-
-        tr:hover td {
-            background: rgba(0, 0, 0, 0.01);
-        }
-        
-        #Future-Vision > p{
-            font-size: 19.2px;
-            font-weight: 400;
-            letter-spacing: 3px;
-        }
-
-        
-        #contact {
-            background-color: var(--panel-surface);
-            width: 90%;
-            margin: 4rem auto;
-            border: 3px dotted  black;
-            border-radius: 12px;
-            background-image: url('images/smiley garbage bin.jpg');
-            background-position-x: right;
-            background-repeat: no-repeat;
-            background-position: right 360px ;
-            background-size: 60% auto;
-        }
-
-        #contact p {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-            max-width: 50%;
-        }
-
-        #contact-form {
-            display: flex;
-            flex-direction: column;
-            max-width: 50%; 
-            gap: 1.5rem;
-        }
-
-        #contact-form label {
-            font-family: system-ui, sans-serif;
-            font-size: 0.9rem;
-            font-weight: 500;
-            opacity: 0.8;
-        }
-
-        #contact-form input, #contact-form textarea {
-            width: 100%;
-            padding: 1.2rem;
-            background: var(--bg-base);
-            border: 1px solid var(--soft-border);
-            font-family: system-ui, sans-serif;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        #contact-form input:focus, #contact-form textarea:focus {
-            outline: none;
-            border-color: var(--text-main);
-        }
-
-        #contact-form button {
-            align-self: flex-start;
-            background: var(--text-main);
-            color: var(--bg-base);
-            border: none;
-            padding: 1.2rem 2.8rem;
-            font-family: system-ui, sans-serif;
-            font-weight: 500;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        #contact-form button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        }
-
-        footer {
-            padding: 4rem 12%;
-            background: var(--bg-base);
-            font-family: system-ui, sans-serif;
-            font-size: 0.85rem;
-            opacity: 0.5;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
     <header>
-        <h1>kanairo klean</h1>
-        <nav>
+        <p class="brand">Kanairo Klean</p>
+        <nav class="navbar">
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
+                <li><a href="about.html" aria-current="page">About Us</a></li>
                 <li><a href="compliance.html">Compliance</a></li>
                 <li><a href="dashboard.html">Dashboard</a></li>
                 <li><a href="marketplace.html">Marketplace</a></li>
             </ul>
         </nav>
-    </header>  
+        <button class="topbar-icon" type="button" aria-label="System status">
+            <span class="material-symbols-outlined">sensors</span>
+        </button>
+    </header>
 
     <main>
         <section id="about-Kanairo">
@@ -358,61 +42,61 @@
         </section>
 
         <section id="Core-Problem">
-            <h1>Core Challenges & System Architecture</h1>
-            
+            <h2>Core Challenges & System Architecture</h2>
+
             <article class="problem-card">
-                <h1>1. Asymmetric Information:</h1>
+                <h3>1. Asymmetric Information:</h3>
                 <p>Collectors sell materials at arbitrary prices due to a lack of market data.</p>
             </article>
-            
+
             <article class="problem-card">
-                <h1>2. Liquidity Delays:</h1>
+                <h3>2. Liquidity Delays:</h3>
                 <p>Independent collectors face significant gaps in receiving payments.</p>
             </article>
-            
+
             <article class="problem-card">
-                <h1>3. Unpredictable Supply:</h1>
+                <h3>3. Unpredictable Supply:</h3>
                 <p>Industrial recyclers suffer from frequent supply shocks.</p>
             </article>
-            
+
             <article class="problem-card">
-                <h1>4. Inefficient Brokerage:</h1>
+                <h3>4. Inefficient Brokerage:</h3>
                 <p>The current waste economy relies on manual, inefficient middleman structures.</p>
             </article>
-            
+
             <article class="problem-card">
-                <h1>5. Customer Segments:</h1>
+                <h3>5. Customer Segments:</h3>
                 <p>Primary Users (Nodes): Local aggregators and yard owners who act as digital nodes. Beneficiaries: Thousands of independent street-level collectors.</p>
             </article>
-            
+
             <article class="problem-card">
-                <h1>6. Industrial Clients:</h1>
+                <h3>6. Industrial Clients:</h3>
                 <p>Recycling plants requiring steady, traceable supply chains. Corporate Clients: Companies requiring Extended Producer Responsibility (EPR) compliance.</p>
             </article>
-            
+
             <div class="solution-card">
-                <h2>Kanairo's Solution:</h2>
+                <h3>Kanairo's Solution:</h3>
                 <p>Kanairo solves this through:</p>
-                
+
                 <article class="solution-card">
-                    <h2><strong>1. Price Discovery:</strong></h2>
+                    <h4><strong>1. Price Discovery:</strong></h4>
                     <p>Real-time market rates for PET, HDPE, and E-Waste.</p>
                 </article>
-                
+
                 <article class="solution-card">
-                    <h2><strong>2. Verified Inventory:</strong></h2>
+                    <h4><strong>2. Verified Inventory:</strong></h4>
                     <p>Digital logging of Material Hotspots across the city.</p>
                 </article>
-                
+
                 <article class="solution-card">
-                    <h2><strong>3. Instant Settlement:</strong></h2>
+                    <h4><strong>3. Instant Settlement:</strong></h4>
                     <p>Automated M-Pesa payouts triggered at the point of weight verification.</p>
                 </article>
             </div>
         </section>
 
         <section id="User-Architecture">
-            <h1>User Architecture: The Proxy Model</h1>
+            <h2>User Architecture: The Proxy Model</h2>
             <p>
                 To address the device gap among street-level collectors, Kanairo utilizes a 
                 <strong>"Micro-Hub" strategy.</strong> Local aggregators (yard owners) serve as the primary
@@ -426,7 +110,7 @@
         </section>
 
         <section id="Market-Impact">
-            <h1>Market Impact</h1>
+            <h2>Market Impact</h2>
             <table>
                 <thead>
                     <tr>
@@ -456,7 +140,7 @@
         </section>
 
         <section id="Future-Vision">
-            <h1>Future Vision</h1>
+            <h2>Future Vision</h2>
             <p>
                 By 2032, Kanairo aims to formalize Nairobi’s informal waste sector, creating a 
                 transparent, efficient marketplace that benefits collectors, recyclers, and the environment. 
@@ -466,12 +150,12 @@
         </section>
         
         <section id="Value-Proposition">
-            <h1>Value Proposition</h1>
+            <h2>Value Proposition</h2>
             <p>
-                Kanairo provides a comprehensive solution that addresses the challenges of the 
+                Kanairo provides a comprehensive solution that addresses the challenges of the
                 informal waste sector by creating a transparent, efficient marketplace for all stakeholders.
             </p>
-            <h2>Why Choose Kanairo?</h2>
+            <h3>Why Choose Kanairo?</h3>
             <p>
                 Kanairo stands out by offering:
             </p>
@@ -491,7 +175,7 @@
         </section>
 
         <section id="contact">
-            <h1>Contact Us</h1>
+            <h2>Contact Us</h2>
             <p>Have questions or want to learn more about Kanairo? Get in touch with us!</p>
 
             <form id="contact-form">
@@ -522,5 +206,10 @@
             });
         </script>
     </footer>
+
+    <!-- React (CDN, no build step, no JSX) -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="js/reveal.js"></script>
 </body>
 </html>

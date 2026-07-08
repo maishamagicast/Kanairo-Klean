@@ -1,0 +1,4 @@
+/* Owned by Builder D — About, Compliance & QA.
+   Cross-page responsive rules: mobile nav, grid breakpoints, font clamps.
+   Loaded last on every page so it can override page-specific styles at
+   narrow widths. */

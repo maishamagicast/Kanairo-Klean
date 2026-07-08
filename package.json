@@ -1,0 +1,10 @@
+{
+  "name": "kanairo-klean",
+  "version": "1.0.0",
+  "description": "Static website project for Kanairo Klean",
+  "private": true,
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  }
+}
