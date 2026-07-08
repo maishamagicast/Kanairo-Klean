@@ -148,10 +148,13 @@
         </script>
     </footer>
 
-    <!-- React (CDN, no build step, no JSX) -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <script src="js/reveal.js"></script>
+    <!-- Static content first — renders immediately, no React dependency -->
+    <script type="module" src="js/home-static.js"></script>
+    <script defer src="js/reveal.js"></script>
+
+    <!-- React (CDN, production build, deferred so it never blocks parsing) -->
+    <script defer src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script defer src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <script type="module" src="js/home.js"></script>
 </body>
 </html>

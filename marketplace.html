@@ -50,11 +50,11 @@
         </script>
     </footer>
 
-    <!-- React (CDN, no build step, no JSX) -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/reveal.js"></script>
+    <!-- React (CDN, production build, deferred so it never blocks parsing) -->
+    <script defer src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script defer src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="js/reveal.js"></script>
 </body>
 <script type="module" src="js/payments.js"></script>
 <script type="module" src="js/marketplace.js"></script>
