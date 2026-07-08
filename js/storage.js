@@ -5,6 +5,7 @@
 //   [{ name: string, materials: [{ name: string, quantity: number }] }]
 
 const KEY = 'kanairo_hotspots';
+const LOCAL_EVENT = 'kanairo:hotspots-changed';
 
 export function getHotspots() {
     const stored = localStorage.getItem(KEY);
@@ -13,14 +14,23 @@ export function getHotspots() {
 
 export function saveHotspots(hotspots) {
     localStorage.setItem(KEY, JSON.stringify(hotspots));
+    // The native "storage" event only fires in OTHER tabs/pages, not this
+    // one — dispatch a local event too so same-page islands (e.g. the log
+    // form and the Material Mix chart both on Dashboard) stay in sync.
+    window.dispatchEvent(new CustomEvent(LOCAL_EVENT));
 }
 
-// Fires when another tab/page changes the store (e.g. Dashboard logging
-// inventory while Marketplace is open). Returns an unsubscribe function.
+// Fires when this page OR another tab/page changes the store (e.g.
+// Dashboard logging inventory while Marketplace is open elsewhere).
+// Returns an unsubscribe function.
 export function onHotspotsChange(callback) {
     const handler = (e) => {
-        if (e.key === KEY) callback(getHotspots());
+        if (e.type === LOCAL_EVENT || e.key === KEY) callback(getHotspots());
     };
     window.addEventListener('storage', handler);
-    return () => window.removeEventListener('storage', handler);
+    window.addEventListener(LOCAL_EVENT, handler);
+    return () => {
+        window.removeEventListener('storage', handler);
+        window.removeEventListener(LOCAL_EVENT, handler);
+    };
 }

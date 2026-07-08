@@ -1,209 +1,137 @@
-// Mock Data for Hotspots and Inventory
-const defaultHotspots = [
-    {
-        name: 'Nairobi Central',
-        materials: [
-            { name: 'Plastic (PET)', quantity: 200 },
-            { name: 'Paper', quantity: 100 },
-            { name: 'E-Waste', quantity: 50 }
-        ]
-    },
-    {
-        name: 'Mombasa Port',
-        materials: [
-            { name: 'Plastic (HDPE)', quantity: 150 },
-            { name: 'Paper', quantity: 80 },
-            { name: 'Metal', quantity: 30 }
-        ]
-    },
-    {
-        name: 'Kisumu Market',
-        materials: [
-            { name: 'Plastic (PET)', quantity: 100 },
-            { name: 'Paper', quantity: 50 },
-            { name: 'Metal', quantity: 20 }
-        ]
-    }
-];
+// Builder B — Dashboard inventory islands: Material Mix, Current Inventory
+// bars, and the Log New Material form. All read/write the real
+// kanairo_hotspots store via js/storage.js — no JSX.
+import { mount } from './react-shared.js';
+import { getHotspots, saveHotspots, onHotspotsChange } from './storage.js';
 
-// Load from localStorage or use defaults
-let hotspots = [];
-const storedHotspots = localStorage.getItem('kanairo_hotspots');
-if (storedHotspots) {
-    hotspots = JSON.parse(storedHotspots);
-} else {
-    hotspots = JSON.parse(JSON.stringify(defaultHotspots)); // deep copy
-    localStorage.setItem('kanairo_hotspots', JSON.stringify(hotspots)); // FORCE SAVE
+const h = window.React.createElement;
+const { useState, useEffect } = window.React;
+
+const MATERIAL_COLORS = {
+    'Plastic (PET)': '#22c55e',
+    'Plastic (HDPE)': '#16a34a',
+    'Paper': '#4ade80',
+    'Metal': '#86efac',
+    'E-Waste': '#5a7a5a',
+};
+
+const HOTSPOT_NAMES = ['Nairobi Central', 'Mombasa Port', 'Kisumu Market', 'Dandora', 'Gikomba', 'Industrial Area', 'Eastleigh', 'Ruiru'];
+const MATERIAL_NAMES = ['Plastic (PET)', 'Plastic (HDPE)', 'Paper', 'Metal', 'E-Waste'];
+
+function aggregateInventory(hotspots) {
+    const map = new Map();
+    hotspots.forEach((hs) => hs.materials.forEach((m) => {
+        map.set(m.name, (map.get(m.name) || 0) + m.quantity);
+    }));
+    return Array.from(map, ([name, quantity]) => ({ name, quantity }));
 }
 
-function saveHotspots() {
-    localStorage.setItem('kanairo_hotspots', JSON.stringify(hotspots));
-}
+function MaterialMix() {
+    const [hotspots, setHotspots] = useState(getHotspots());
+    useEffect(() => onHotspotsChange(setHotspots), []);
 
-// Combine all hotspots to calculate total inventory
-function getOverallInventory() {
-    const inventoryMap = new Map();
-
-    hotspots.forEach(hotspot => {
-        hotspot.materials.forEach(mat => {
-            if (inventoryMap.has(mat.name)) {
-                inventoryMap.set(mat.name, inventoryMap.get(mat.name) + mat.quantity);
-            } else {
-                inventoryMap.set(mat.name, mat.quantity);
-            }
-        });
+    const inv = aggregateInventory(hotspots);
+    const total = inv.reduce((s, i) => s + i.quantity, 0) || 1;
+    let cursor = 0;
+    const stops = inv.map((i) => {
+        const pct = (i.quantity / total) * 100;
+        const color = MATERIAL_COLORS[i.name] || '#5a7a5a';
+        const seg = `${color} ${cursor}% ${cursor + pct}%`;
+        cursor += pct;
+        return seg;
     });
+    const donutStyle = { background: inv.length ? `conic-gradient(${stops.join(',')})` : 'rgba(34,197,94,.08)' };
 
-    const overallInventory = [];
-    inventoryMap.forEach((quantity, name) => {
-        overallInventory.push({ name, quantity });
-    });
-
-    return overallInventory;
+    return h('div', { className: 'mix-wrap' },
+        h('div', { className: 'mix-donut', style: donutStyle }),
+        h('div', { className: 'mix-legend' },
+            inv.length === 0
+                ? h('p', { style: { fontSize: '0.78rem', color: 'var(--outline)' } }, 'No inventory logged yet.')
+                : inv.map((i) => h('div', { className: 'mix-legend-row', key: i.name },
+                    h('span', { className: 'mix-legend-dot', style: { background: MATERIAL_COLORS[i.name] || '#5a7a5a' } }),
+                    h('span', null, i.name),
+                    h('span', null, `${Math.round((i.quantity / total) * 100)}%`)
+                ))
+        )
+    );
 }
 
-function getFormattedDateInventory() {
-    const now = new Date();
-    return now.toLocaleString('en-KE', { dateStyle: 'short', timeStyle: 'short' });
+function InventoryBars() {
+    const [hotspots, setHotspots] = useState(getHotspots());
+    useEffect(() => onHotspotsChange(setHotspots), []);
+
+    const inv = aggregateInventory(hotspots);
+    const max = Math.max(1, ...inv.map((i) => i.quantity));
+
+    return h('div', { className: 'inv-bars' },
+        inv.length === 0
+            ? h('p', { style: { fontSize: '0.78rem', color: 'var(--outline)' } }, 'Log a material below to see it here.')
+            : inv.map((i) => h('div', { className: 'inv-bar-row', key: i.name },
+                h('span', { className: 'inv-bar-mat' }, i.name),
+                h('div', { className: 'inv-bar-track' }, h('span', { style: { width: `${Math.round((i.quantity / max) * 100)}%` } })),
+                h('span', { className: 'inv-bar-qty' }, `${i.quantity.toLocaleString()} kg`)
+            ))
+    );
 }
 
-// Render Hotspots (marketplace.html)
-function renderHotspots() {
-    const container = document.querySelector('#hotspots');
-    if (!container) return;
+function LogMaterialForm() {
+    const [hotspot, setHotspot] = useState('');
+    const [material, setMaterial] = useState('');
+    const [qty, setQty] = useState('');
+    const [status, setStatus] = useState('');
 
-    const h2 = container.querySelector('h2') ? container.querySelector('h2').outerHTML : '<h2>Material Hotspots</h2>';
-    container.innerHTML = h2;
-
-    hotspots.forEach(hotspot => {
-        const div = document.createElement('div');
-        div.className = 'hotspot-card';
-        
-        let rowsHtml = '';
-        hotspot.materials.forEach(mat => {
-            rowsHtml += `
-                <tr>
-                    <td>${mat.name}</td>
-                    <td>${mat.quantity} kg</td>
-                </tr>
-            `;
-        });
-
-        div.innerHTML = `
-            <h3>${hotspot.name}</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Material</th>
-                        <th>Available Quantity</th>
-                    </tr>
-                </thead>
-                <tbody class="hotspot-data">
-                    ${rowsHtml}
-                </tbody>
-            </table>
-        `;
-        container.appendChild(div);
-    });
-}
-
-// Render Inventory Overview (dashboard.html)
-function renderInventoryOverview() {
-    const tbody = document.getElementById('inventory-table');
-    if (!tbody) return;
-
-    tbody.innerHTML = '';
-
-    const overallInventory = getOverallInventory();
-    let totalKg = 0;
-
-    overallInventory.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${item.name}</td>
-            <td>${item.quantity}</td>
-            <td>${getFormattedDateInventory()}</td>
-        `;
-        tbody.appendChild(tr);
-        totalKg += item.quantity;
-    });
-
-    const materialsCountEl = document.querySelector('.materials-count');
-    if (materialsCountEl) {
-        materialsCountEl.textContent = `${totalKg} kg`;
-    }
-}
-
-function initInventoryForm() {
-    const form = document.getElementById('inventory-form');
-    if (!form) return;
-
-    form.addEventListener('submit', async (e) => {
+    function handleSubmit(e) {
         e.preventDefault();
-        
-        const hotspotName = document.getElementById('hotspot-select').value;
-        const materialName = document.getElementById('material-select').value;
-        const quantity = parseInt(document.getElementById('quantity-input').value, 10);
-        
-        // Find the hotspot
-        let hotspot = hotspots.find(h => h.name === hotspotName);
-        if (!hotspot) {
-            hotspot = { name: hotspotName, materials: [] };
-            hotspots.push(hotspot);
-        }
+        const quantity = parseInt(qty, 10);
+        if (!hotspot || !material || !quantity) return;
 
-        // Find or create the material in this hotspot
-        let material = hotspot.materials.find(m => m.name === materialName);
-        if (material) {
-            material.quantity += quantity;
-        } else {
-            hotspot.materials.push({ name: materialName, quantity: quantity });
-        }
+        const hotspots = getHotspots();
+        let hs = hotspots.find((x) => x.name === hotspot);
+        if (!hs) { hs = { name: hotspot, materials: [] }; hotspots.push(hs); }
+        const mat = hs.materials.find((m) => m.name === material);
+        if (mat) mat.quantity += quantity; else hs.materials.push({ name: material, quantity });
 
-        // Save and re-render
-        saveHotspots();
-        renderHotspots();
-        renderInventoryOverview();
-        
-        // Reset form
-        form.reset();
+        saveHotspots(hotspots);
+        setStatus(`Logged ${quantity} kg of ${material} at ${hotspot}.`);
+        setHotspot('');
+        setMaterial('');
+        setQty('');
+    }
 
-        // Prompt to save to inventory.js directly
-        try {
-            const handle = await window.showSaveFilePicker({
-                suggestedName: 'inventory.js',
-                types: [{
-                    description: 'JavaScript File',
-                    accept: {'text/javascript': ['.js']},
-                }],
-            });
-            const writable = await handle.createWritable();
-            
-            let newContent = "";
-            try {
-                const scriptText = await fetch('js/inventory.js').then(res => res.text());
-                const newHotspotsStr = "const defaultHotspots = " + JSON.stringify(hotspots, null, 4) + ";";
-                newContent = scriptText.replace(/const defaultHotspots = \[[\s\S]*?\];/, newHotspotsStr);
-            } catch(e) {
-                alert("Cannot read original file due to browser security, but inventory was saved locally to browser.");
-                return;
-            }
-
-            await writable.write(newContent);
-            await writable.close();
-            alert(`Successfully logged ${quantity} kg of ${materialName} at ${hotspotName} and saved to file!`);
-        } catch (err) {
-            if (err.name !== 'AbortError') {
-                console.error(err);
-                alert(`Logged inventory locally, but failed to save file: ` + err.message);
-            }
-        }
-    });
+    return h('div', null,
+        h('form', { className: 'dash-form', onSubmit: handleSubmit },
+            h('div', { className: 'dash-form-field' },
+                h('label', { htmlFor: 'hotspot-select' }, 'Hotspot'),
+                h('input', {
+                    id: 'hotspot-select', type: 'text', list: 'hotspot-list', required: true,
+                    placeholder: 'Type or select…', value: hotspot,
+                    onChange: (e) => setHotspot(e.target.value),
+                }),
+                h('datalist', { id: 'hotspot-list' }, HOTSPOT_NAMES.map((n) => h('option', { key: n, value: n })))
+            ),
+            h('div', { className: 'dash-form-field' },
+                h('label', { htmlFor: 'material-select' }, 'Material'),
+                h('input', {
+                    id: 'material-select', type: 'text', list: 'material-list', required: true,
+                    placeholder: 'Type or select…', value: material,
+                    onChange: (e) => setMaterial(e.target.value),
+                }),
+                h('datalist', { id: 'material-list' }, MATERIAL_NAMES.map((n) => h('option', { key: n, value: n })))
+            ),
+            h('div', { className: 'dash-form-field' },
+                h('label', { htmlFor: 'quantity-input' }, 'Quantity (kg)'),
+                h('input', {
+                    id: 'quantity-input', type: 'number', min: 1, required: true,
+                    placeholder: 'e.g. 250', value: qty,
+                    onChange: (e) => setQty(e.target.value),
+                })
+            ),
+            h('button', { type: 'submit', className: 'btn' }, 'Log Inventory')
+        ),
+        status && h('p', { className: 'dash-form-status' }, status)
+    );
 }
 
-// Initialization
-document.addEventListener('DOMContentLoaded', () => {
-    renderHotspots();
-    renderInventoryOverview();
-    initInventoryForm();
-});
+mount(MaterialMix, 'material-mix-root');
+mount(InventoryBars, 'inventory-bars-root');
+mount(LogMaterialForm, 'inventory-form-root');
