@@ -34,3 +34,31 @@ export function onHotspotsChange(callback) {
         window.removeEventListener(LOCAL_EVENT, handler);
     };
 }
+
+// Totals per material name, summed across every hotspot — shared by
+// Dashboard (Material Mix / Inventory bars) and Marketplace (stock per
+// price card).
+export function aggregateInventory(hotspots) {
+    const map = new Map();
+    hotspots.forEach((hs) => hs.materials.forEach((m) => {
+        map.set(m.name, (map.get(m.name) || 0) + m.quantity);
+    }));
+    return Array.from(map, ([name, quantity]) => ({ name, quantity }));
+}
+
+// Deducts a purchased quantity from the store, spread across whichever
+// hotspots hold it (used by the Marketplace "Buy Now" flow).
+export function deductInventory(materialName, quantity) {
+    const hotspots = getHotspots();
+    let remaining = quantity;
+    for (const hs of hotspots) {
+        for (const mat of hs.materials) {
+            if (mat.name === materialName && mat.quantity > 0 && remaining > 0) {
+                const take = Math.min(mat.quantity, remaining);
+                mat.quantity -= take;
+                remaining -= take;
+            }
+        }
+    }
+    saveHotspots(hotspots);
+}

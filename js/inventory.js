@@ -2,29 +2,24 @@
 // bars, and the Log New Material form. All read/write the real
 // kanairo_hotspots store via js/storage.js — no JSX.
 import { mount } from './react-shared.js';
-import { getHotspots, saveHotspots, onHotspotsChange } from './storage.js';
+import { getHotspots, saveHotspots, onHotspotsChange, aggregateInventory } from './storage.js';
 
 const h = window.React.createElement;
 const { useState, useEffect } = window.React;
 
+// Same names as market-data.js's MATERIALS, so Marketplace stock lookups
+// and Dashboard logging both refer to the same materials.
 const MATERIAL_COLORS = {
-    'Plastic (PET)': '#22c55e',
-    'Plastic (HDPE)': '#16a34a',
-    'Paper': '#4ade80',
-    'Metal': '#86efac',
+    'PET Plastic': '#22c55e',
+    'HDPE Plastic': '#16a34a',
     'E-Waste': '#5a7a5a',
+    'Cardboard': '#4ade80',
+    'Aluminium': '#86efac',
+    'Clear Glass': '#3f6b46',
 };
 
 const HOTSPOT_NAMES = ['Nairobi Central', 'Mombasa Port', 'Kisumu Market', 'Dandora', 'Gikomba', 'Industrial Area', 'Eastleigh', 'Ruiru'];
-const MATERIAL_NAMES = ['Plastic (PET)', 'Plastic (HDPE)', 'Paper', 'Metal', 'E-Waste'];
-
-function aggregateInventory(hotspots) {
-    const map = new Map();
-    hotspots.forEach((hs) => hs.materials.forEach((m) => {
-        map.set(m.name, (map.get(m.name) || 0) + m.quantity);
-    }));
-    return Array.from(map, ([name, quantity]) => ({ name, quantity }));
-}
+const MATERIAL_NAMES = ['PET Plastic', 'HDPE Plastic', 'E-Waste', 'Cardboard', 'Aluminium', 'Clear Glass'];
 
 function MaterialMix() {
     const [hotspots, setHotspots] = useState(getHotspots());

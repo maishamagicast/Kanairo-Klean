@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MarketPlace | Kanairo</title>
-    <!-- <link rel="stylesheet" href="/css/styles.css"> -->
     <link rel="icon" href="/images/garbage favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
@@ -26,119 +25,20 @@
             <span class="material-symbols-outlined">sensors</span>
         </button>
     </header>
+
     <main>
-        <section id="marketplace">
-            <h1>Marketplace</h1>
-            <p>Explore our digital marketplace connecting collectors, recyclers, and corporate clients. Discover real-time inventory, transparent pricing, and traceable supply chains.</p>
-            <a href="index.html" class="btn">Back to Home</a>
+        <div id="ticker-root" class="ticker-mount mkt-ticker-sticky"></div>
+
+        <section id="marketplace-hero">
+            <span class="eyebrow">— Kanairo Exchange</span>
+            <h1 class="section-header">Live Material Market</h1>
         </section>
-        
-        <section id="market-rates">
-            <h2>Current Market Rates</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Material</th>
-                        <th>Price per kg (KES)</th>
-                        <th>Last Updated</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Plastic (PET)</td>
-                        <td>85</td>
-                        <td>Just now</td>
-                    </tr>
-                    <tr>
-                        <td>Plastic (HDPE)</td>
-                        <td>95</td>
-                        <td>10 mins ago</td>
-                    </tr>
-                    <tr>
-                        <td>E-Waste</td>
-                        <td>320</td>
-                        <td>1 hour ago</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        
-        <section id="market-search">
-            <h2>Search Materials</h2>
-            <form>
-                <input type="text" placeholder="Search for materials..." />
-                <button type="submit">Search</button>
-            </form>
-        </section>
-        
-        <section id="market-list">
-            <h2>Available Materials</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Material Batch</th>
-                        <th>Quantity Available</th>
-                        <th>Location Hub</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>PET Clear Bottles</td>
-                        <td>1,200 kg</td>
-                        <td>Nairobi Central Node</td>
-                    </tr>
-                    <tr>
-                        <td>Industrial HDPE Drums</td>
-                        <td>850 kg</td>
-                        <td>Mombasa Port Node</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>     
-        
-        <section id="hotspots">
-            <h2>Material Hotspots</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Node Location</th>
-                        <th>Primary Material Strain</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Nairobi Central Aggregator</td>
-                        <td>Plastic / E-Waste</td>
-                        <td>High Liquidity</td>
-                    </tr>
-                    <tr>
-                        <td>Kisumu Market Hub</td>
-                        <td>Paper / Metal Flakes</td>
-                        <td>Steady Supply</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        
-        <section id="market-stats">
-            <h2>Market Overview</h2>
-            <div class="stats-container">
-                <article class="stats-info">
-                    <h3>1,000 kg</h3>
-                    <p>Total Materials Available</p>
-                </article>
-                <article class="stats-info">
-                    <h3>50</h3>
-                    <p>Active Sellers</p>
-                </article>
-                <article class="stats-info">
-                    <h3>200</h3>
-                    <p>Active Buyers</p>
-                </article>
-            </div>
+
+        <section id="marketplace-app">
+            <div id="marketplace-app-root"></div>
         </section>
     </main>
+
     <footer>
         <p>&copy; <span id="current-year"></span> Kanairo. All rights reserved.</p>
         <script>
@@ -154,12 +54,12 @@
         </script>
     </footer>
 
-<!-- React (CDN, no build step, no JSX) -->
-<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-<script src="js/reveal.js"></script>
+    <!-- React (CDN, no build step, no JSX) -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/reveal.js"></script>
 </body>
-<script src="js/marketplace.js"></script>
-<script src="js/inventory.js"></script>
-<script src="js/payments.js"></script>
+<script type="module" src="js/payments.js"></script>
+<script type="module" src="js/marketplace.js"></script>
 </html>

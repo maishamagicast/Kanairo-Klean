@@ -1,164 +1,202 @@
-// Base prices mapping
-const basePrices = {
-    'Plastic (PET)': 50,
-    'Plastic (HDPE)': 55,
-    'Paper': 30,
-    'Metal': 100,
-    'E-Waste': 500
-};
+// Builder C — Marketplace: material tabs, price panel + chart, price cards
+// (with search + real stock + Buy Now), order book, live trade feed.
+// No JSX.
+import { Dot, Ticker, mount } from './react-shared.js';
+import { MATERIALS, simulatePrices } from './market-data.js';
+import { getHotspots, onHotspotsChange, aggregateInventory } from './storage.js';
+import { openMpesaModal, recordTransaction, showSuccessNotification } from './payments.js';
 
-// Generate materials dynamically from hotspots in localStorage
-function generateMaterialsFromInventory() {
-    let currentHotspots = [];
-    const stored = localStorage.getItem('kanairo_hotspots');
-    if (stored) {
-        currentHotspots = JSON.parse(stored);
-    } else {
-        // Fallback hardcoded if everything fails
-        currentHotspots = [
-            { name: 'Nairobi Central', materials: [{ name: 'Plastic (PET)', quantity: 200 }, { name: 'Paper', quantity: 100 }, { name: 'E-Waste', quantity: 50 }] },
-            { name: 'Mombasa Port', materials: [{ name: 'Plastic (HDPE)', quantity: 150 }, { name: 'Paper', quantity: 80 }, { name: 'Metal', quantity: 30 }] },
-            { name: 'Kisumu Market', materials: [{ name: 'Plastic (PET)', quantity: 100 }, { name: 'Paper', quantity: 50 }, { name: 'Metal', quantity: 20 }] }
-        ];
-    }
+const h = window.React.createElement;
+const { useState, useEffect, useRef } = window.React;
 
-    const newMaterials = [];
-    let idCounter = 1;
+function buildPriceHistory(basePrice) {
+    return Array.from({ length: 24 }, (_, i) => ({
+        h: `${String(i).padStart(2, '0')}:00`,
+        v: Math.max(0.5, basePrice + Math.sin(i * 0.4) * basePrice * 0.06 + Math.random() * basePrice * 0.02),
+    }));
+}
 
-    currentHotspots.forEach(hotspot => {
-        hotspot.materials.forEach(mat => {
-            const bp = basePrices[mat.name] || 50; 
-            newMaterials.push({
-                id: idCounter++,
-                name: mat.name,
-                available: mat.quantity,
-                basePrice: bp,
-                currentPrice: bp, 
-                status: mat.quantity > 50 ? 'In Stock' : 'Low Stock',
-                location: hotspot.name
-            });
+function buildOrderBook(price) {
+    const askOffsets = [0.3, 0.6, 0.9, 1.3, 1.7];
+    const bidOffsets = [0.3, 0.6, 0.9, 1.3, 1.7];
+    const askSizes = [940, 730, 1120, 460, 1890];
+    const bidSizes = [1240, 880, 1560, 620, 2100];
+
+    const asks = askOffsets.map((d, i) => {
+        const p = +(price + d).toFixed(1);
+        return { price: p, size: askSizes[i], total: Math.round(p * askSizes[i]) };
+    });
+    const bids = bidOffsets.map((d, i) => {
+        const p = Math.max(0.1, +(price - d).toFixed(1));
+        return { price: p, size: bidSizes[i], total: Math.round(p * bidSizes[i]) };
+    });
+    const maxTotal = Math.max(...asks.map((a) => a.total), ...bids.map((b) => b.total));
+    return { asks, bids, spread: askOffsets[0] + bidOffsets[0], maxTotal };
+}
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function MarketplaceApp() {
+    const [prices, setPrices] = useState(MATERIALS);
+    const [selected, setSelected] = useState(MATERIALS[0].id);
+    const [hotspots, setHotspots] = useState(getHotspots());
+    const [query, setQuery] = useState('');
+    const [trades, setTrades] = useState([]);
+    const chartInstance = useRef(null);
+
+    useEffect(() => {
+        const iv = setInterval(() => setPrices((p) => simulatePrices(p)), 2800);
+        return () => clearInterval(iv);
+    }, []);
+
+    useEffect(() => onHotspotsChange(setHotspots), []);
+
+    useEffect(() => {
+        const iv = setInterval(() => {
+            const m = prices[Math.floor(Math.random() * prices.length)];
+            const wt = (Math.random() * 200 + 20).toFixed(0);
+            const now = new Date();
+            const time = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+            setTrades((prev) => [{ time, mat: m.id, wt: `${wt} kg`, side: Math.random() > 0.5 ? 'buy' : 'sell' }, ...prev.slice(0, 17)]);
+        }, 2500);
+        return () => clearInterval(iv);
+    }, [prices]);
+
+    const selMat = prices.find((m) => m.id === selected) || prices[0];
+    const inv = aggregateInventory(hotspots);
+    const stockFor = (name) => inv.find((i) => i.name === name)?.quantity || 0;
+    const filtered = prices.filter((m) => (m.id + m.name).toLowerCase().includes(query.toLowerCase()));
+
+    useEffect(() => {
+        if (!window.Chart) return;
+        const ctx = document.getElementById('mkt-price-chart');
+        if (!ctx) return;
+        const history = buildPriceHistory(selMat.price);
+        if (chartInstance.current) chartInstance.current.destroy();
+        chartInstance.current = new window.Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: history.map((pt) => pt.h),
+                datasets: [{
+                    data: history.map((pt) => +pt.v.toFixed(1)),
+                    borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,.15)',
+                    fill: true, tension: 0.35, pointRadius: 0, borderWidth: 1.5,
+                }],
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false }, ticks: { color: '#5a7a5a', font: { family: 'JetBrains Mono', size: 9 }, maxTicksLimit: 8 } },
+                    y: { grid: { color: 'rgba(34,197,94,.06)' }, ticks: { color: '#5a7a5a', font: { family: 'JetBrains Mono', size: 9 } } },
+                },
+            },
         });
-    });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selected]);
 
-    return newMaterials;
-}
-
-let materials = [];
-let filteredMaterials = [];
-
-function getFormattedDateMarket() {
-    const now = new Date();
-    return now.toLocaleString('en-KE', { dateStyle: 'short', timeStyle: 'short' });
-}
-
-// 1. Price Discovery Module
-function updateMarketRates() {
-    const ratesBody = document.querySelector('#market-rates tbody');
-    if (!ratesBody) return;
-
-    materials.forEach(mat => {
-        const fluctuation = (Math.random() - 0.5) * 0.1; // +/- 5%
-        mat.currentPrice = Math.round(mat.basePrice * (1 + fluctuation));
-    });
-
-    ratesBody.innerHTML = '';
-    
-    // Group by material name to show unique market rates
-    const uniqueMaterials = [...new Map(materials.map(item => [item.name, item])).values()];
-
-    uniqueMaterials.forEach(mat => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${mat.name}</td>
-            <td>${mat.currentPrice}</td>
-            <td>${getFormattedDateMarket()}</td>
-        `;
-        ratesBody.appendChild(tr);
-    });
-}
-
-// 2. Dynamic Material Listings
-function renderMaterials() {
-    const container = document.querySelector('#market-list');
-    if (!container) return;
-
-    const h2 = container.querySelector('h2') ? container.querySelector('h2').outerHTML : '<h2>Available Materials</h2>';
-    container.innerHTML = h2;
-
-    if (filteredMaterials.length === 0) {
-        container.innerHTML += '<p>No materials found matching your search.</p>';
-        return;
+    function buyNow(m) {
+        const stock = stockFor(m.name);
+        if (stock <= 0) return;
+        openMpesaModal({
+            material: m.name, maxAvailable: stock, pricePerKg: m.price,
+            onConfirm: (qty) => {
+                const txn = recordTransaction({ material: m.name, quantity: qty, amount: Math.round(qty * m.price) });
+                showSuccessNotification(`Bought ${qty}kg ${m.name} — receipt ${txn.id}`);
+            },
+        });
     }
 
-    filteredMaterials.forEach(mat => {
-        const div = document.createElement('div');
-        div.className = 'material-card';
-        div.innerHTML = `
-            <h3>${mat.name}</h3>
-            <p>Available: ${mat.available} kg</p>
-            <p>Price: ${mat.currentPrice} KES/kg</p>
-            <p>Status: ${mat.status}</p>
-            <p>location: ${mat.location}</p>
-            <button>Buy Now</button>
-        `;
-        container.appendChild(div);
-    });
+    const book = buildOrderBook(selMat.price);
+
+    return h('div', null,
+        h('div', { className: 'mkt-tabs-row' }, prices.map((m) => h('button', {
+            key: m.id, type: 'button',
+            className: `k-tab${selected === m.id ? ' on' : ''}`,
+            onClick: () => setSelected(m.id),
+        }, m.id))),
+
+        h('div', { className: 'mkt-grid' },
+            h('div', null,
+                h('div', { className: 'dash-card mkt-hero-card', style: { marginBottom: '24px' } },
+                    h('div', { className: 'mkt-hero-top' },
+                        h('div', null,
+                            h('div', { className: 'mkt-hero-id' }, `${selMat.id} — ${selMat.name}`),
+                            h('div', { className: 'mkt-hero-price' },
+                                h('span', { className: 'value' }, selMat.price.toFixed(1)),
+                                h('span', { className: 'unit' }, selMat.unit)
+                            )
+                        ),
+                        h('span', { className: `mkt-hero-change ${selMat.trend}` },
+                            `${selMat.trend === 'up' ? '+' : ''}${selMat.change.toFixed(1)} KES`)
+                    ),
+                    h('div', { className: 'chart-wrap' }, h('canvas', { id: 'mkt-price-chart' }))
+                ),
+
+                h('div', { className: 'mkt-search' },
+                    h('input', {
+                        type: 'text', placeholder: 'Search materials…',
+                        value: query, onChange: (e) => setQuery(e.target.value),
+                    })
+                ),
+
+                h('div', { className: 'price-cards-grid' }, filtered.map((m) => {
+                    const stock = stockFor(m.name);
+                    return h('div', {
+                        className: `price-card${selected === m.id ? ' selected' : ''}`, key: m.id,
+                        onClick: () => setSelected(m.id),
+                    },
+                        h('div', { className: 'price-card-top' },
+                            h('span', { className: 'price-card-id' }, m.id),
+                            h('span', { className: `price-card-change ${m.trend}` },
+                                `${m.trend === 'up' ? '▲' : '▼'} ${Math.abs(m.change).toFixed(1)}`)
+                        ),
+                        h('div', { className: 'price-card-value' }, m.price.toFixed(1)),
+                        h('div', { className: 'price-card-name' }, m.name),
+                        h('div', { className: 'price-card-stock' }, h('span', null, 'Stock'), h('span', null, `${stock.toLocaleString()} kg`)),
+                        h('button', {
+                            className: 'price-card-buy', type: 'button', disabled: stock <= 0,
+                            onClick: (e) => { e.stopPropagation(); buyNow(m); },
+                        }, stock <= 0 ? 'Out of Stock' : 'Buy Now')
+                    );
+                }))
+            ),
+
+            h('div', null,
+                h('div', { className: 'dash-card', style: { marginBottom: '2px' } },
+                    h('div', { className: 'dash-card-head' }, h('h3', null, `Order Book — ${selMat.id}`)),
+                    h('div', { className: 'ob-head-row' }, h('span', null, 'Price'), h('span', null, 'Size (kg)'), h('span', null, 'Total')),
+                    book.asks.slice().reverse().map((r, i) => h('div', { className: 'ob-row ask', key: `a${i}` },
+                        h('span', { className: 'depth', style: { width: `${(r.total / book.maxTotal) * 100}%` } }),
+                        h('span', { className: 'ob-price down' }, r.price.toFixed(1)),
+                        h('span', { className: 'ob-size' }, r.size.toLocaleString()),
+                        h('span', { className: 'ob-total' }, r.total.toLocaleString())
+                    )),
+                    h('div', { className: 'ob-spread' }, h('span', null, 'SPREAD'), h('span', null, `${book.spread.toFixed(1)} KES`)),
+                    book.bids.map((r, i) => h('div', { className: 'ob-row bid', key: `b${i}` },
+                        h('span', { className: 'depth', style: { width: `${(r.total / book.maxTotal) * 100}%` } }),
+                        h('span', { className: 'ob-price up' }, r.price.toFixed(1)),
+                        h('span', { className: 'ob-size' }, r.size.toLocaleString()),
+                        h('span', { className: 'ob-total' }, r.total.toLocaleString())
+                    ))
+                ),
+
+                h('div', { className: 'dash-card' },
+                    h('div', { className: 'dash-card-head' }, h('h3', null, 'Live Trades'), h(Dot)),
+                    h('div', { className: 'trade-feed-wrap' },
+                        trades.length === 0
+                            ? h('div', { className: 'trade-empty' }, 'Waiting for trades…')
+                            : trades.map((t, i) => h('div', { className: 'trade-row', key: i },
+                                h('span', { className: 'trade-time' }, t.time),
+                                h('span', { className: `trade-side ${t.side}` }, `${t.side.toUpperCase()} ${t.mat}`),
+                                h('span', { className: 'trade-wt' }, t.wt)
+                            ))
+                    )
+                )
+            )
+        )
+    );
 }
 
-// 3. Search Functionality
-function initSearch() {
-    const searchForm = document.querySelector('#market-search form');
-    const searchInput = document.querySelector('#market-search input');
-
-    if (!searchForm || !searchInput) return;
-
-    searchForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        filterMaterials(searchInput.value);
-    });
-
-    searchInput.addEventListener('input', (e) => {
-        filterMaterials(e.target.value);
-    });
-}
-
-function filterMaterials(query) {
-    const lowerQuery = query.toLowerCase();
-    filteredMaterials = materials.filter(mat => {
-        return mat.name.toLowerCase().includes(lowerQuery) ||
-               mat.location.toLowerCase().includes(lowerQuery) ||
-               mat.status.toLowerCase().includes(lowerQuery);
-    });
-    renderMaterials();
-}
-
-// Sync Database dynamically
-function syncData() {
-    // Generate fresh materials from DB
-    materials = generateMaterialsFromInventory();
-    
-    // Re-apply the current search filter
-    const searchInput = document.querySelector('#market-search input');
-    if (searchInput && searchInput.value) {
-        filterMaterials(searchInput.value);
-    } else {
-        filteredMaterials = [...materials];
-    }
-    
-    // Update rates and UI
-    updateMarketRates();
-    renderMaterials();
-}
-
-// Listen for storage changes so updates in Dashboard tab sync immediately to Marketplace tab
-window.addEventListener('storage', (e) => {
-    if (e.key === 'kanairo_hotspots') {
-        syncData();
-    }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    syncData(); // Initial load
-    initSearch();
-    setInterval(syncData, 5000); // Poll every 5s for price fluctuation
-});
+mount(Ticker, 'ticker-root');
+mount(MarketplaceApp, 'marketplace-app-root');
