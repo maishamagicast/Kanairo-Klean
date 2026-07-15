@@ -4,8 +4,195 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compliance | Kanairo</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <!-- <link rel="stylesheet" href="/css/styles.css"> -->
     <link rel="icon" href="/images/garbage favicon.png" type="image/png">
+    <style>
+        
+        :root {
+            --primary-accent: #d4af37; 
+            --bg-base: #f9f8f6;       
+            --panel-surface: #ffffff;  
+            --text-main: #1c1b1a;      
+            --soft-border: #e8e6e1;    
+            --grid-color: rgba(203, 213, 225, 0.6); 
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Playfair Display', Georgia, serif;
+            overflow-x: hidden;
+            line-height: 1.4;
+        }
+
+        
+        main > section {
+            padding: 10rem 12% 8rem 12%;
+            position: relative;
+            border-bottom: 1px solid var(--soft-border);
+            background-color: var(--bg-base);
+        }
+
+        main > section h2 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 400;
+            letter-spacing: -1px;
+            margin-bottom: 3rem;
+            text-align: left;
+        }
+
+        
+        header {
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100%;
+            padding: 2.2rem 12%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(249, 248, 246, 0.8); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid transparent;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        header.scrolled {
+            padding: 1.2rem 12%;
+            background: rgba(249, 248, 246, 0.96);
+            border-bottom: 1px solid black;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-family: system-ui, sans-serif;
+            font-weight: 500;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+        }
+
+        .navbar ul {
+            display: flex;
+            list-style: none;
+            gap: 3.5rem;
+        }
+
+        .navbar a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: system-ui, sans-serif;
+            font-size: 0.9rem;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .navbar a:hover {
+            opacity: 1;
+        }
+
+        
+        #compliance-info {
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 1.5rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            background-image: 
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        #compliance-info h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2.5rem;
+            width: 100%;
+        }
+
+        
+        #compliance-stats { background-color: var(--panel-surface); }
+        #epr-support { background-color: var(--panel-surface); }
+
+        .stats-info {
+            border-top: 2px solid var(--text-main);
+            padding-top: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .stats-info h3 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 300;
+            letter-spacing: -2px;
+            color: var(--text-main);
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-info p {
+            font-family: system-ui, sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+        }
+
+        
+        .stats-container:hover .stats-info {
+            opacity: 0.3;
+            filter: blur(1px);
+        }
+
+        .stats-container .stats-info:hover {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(-8px);
+            border-top-color: var(--primary-accent);
+        }
+
+        
+        @media (max-width: 1024px) {
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        footer {
+            padding: 4rem 12%;
+            background: var(--bg-base);
+            font-family: system-ui, sans-serif;
+            font-size: 0.85rem;
+            opacity: 0.5;
+            border-top: 1px solid var(--soft-border);
+        }
+    </style>
 </head>
 <body>
     <header>
