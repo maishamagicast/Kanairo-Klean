@@ -5,504 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | Kanairo</title>
 
-    <!-- <link rel="stylesheet" href="/css/styles.css"> -->
     <link rel="icon" href="/images/garbage favicon.png" type="image/png">
-    
-    <style>
-        :root {
-            --primary-accent: #d4af37; 
-            --bg-base: #f9f8f6;       
-            --panel-surface: #ffffff;  
-            --text-main: #1c1b1a;      
-            --soft-border: #e8e6e1;    
-            --grid-color: rgba(203, 213, 225, 0.6); 
-        }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            font-family: 'Playfair Display', Georgia, serif;
-            overflow-x: hidden;
-            line-height: 1.4;
-        }
-
-        
-        main > section {
-            padding: 10rem 12% 8rem 12%;
-            position: relative;
-            border-bottom: 1px solid var(--soft-border);
-            background-color: var(--bg-base);
-        }
-
-        main > section h1 {
-            font-size: clamp(2rem, 4vw, 3.2rem);
-            font-weight: 400;
-            letter-spacing: -1px;
-            margin-bottom: 3rem;
-            text-align: left;
-        }
-
-        
-        header {
-            position: fixed;
-            top: 0; 
-            left: 0; 
-            width: 100%;
-            padding: 2.2rem 12%;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(249, 248, 246, 0.8); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid transparent;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        header.scrolled {
-            padding: 1.2rem 12%;
-            background: rgba(249, 248, 246, 0.96);
-            border-bottom: 1px solid black;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
-        }
-
-        header h1 {
-            font-size: 1.5rem;
-            font-family: system-ui, sans-serif;
-            font-weight: 500;
-            letter-spacing: 10px;
-            text-transform: uppercase;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 3.5rem;
-        }
-
-        nav a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-family: system-ui, sans-serif;
-            font-size: 0.9rem;
-            opacity: 0.6;
-            transition: opacity 0.3s ease;
-        }
-
-        nav a:hover {
-            opacity: 1;
-        }
-
-        #about-Kanairo {
-            min-height: 60vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background-image: 
-                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-
-        #about-Kanairo p {
-            font-size: 1.5rem;
-            line-height: 1.6;
-            max-width: 800px;
-            color: var(--text-main);
-            opacity: 0.9;
-        }
-
-        #Core-Problem {
-            background-color: var(--panel-surface);
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2.5rem;
-        }
-
-        #Core-Problem h1 {
-            grid-column: 1 / -1;
-            margin-bottom: 2rem;
-        }
-
-        .problem-card {
-            border-top: 2px solid var(--text-main);
-            padding-top: 1.5rem;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .problem-card h1 {
-            font-family: system-ui, sans-serif;
-            font-size: 1.1rem !important;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0;
-        }
-
-        .problem-card p {
-            font-size: 1.2rem;
-            opacity: 0.7;
-        }
-
-        
-        #Core-Problem:hover .problem-card {
-            opacity: 0.3;
-            filter: blur(1px);
-        }
-
-        #Core-Problem .problem-card:hover {
-            opacity: 1;
-            filter: blur(0);
-            transform: translateY(-6px);
-        }
-
-        .solution-card {
-            grid-column: 1 / -1;
-            font-size: 19.2px;
-            letter-spacing: 1px;
-            background: var(--bg-base);
-            padding: 3.5rem;
-            margin-top: 3rem;
-            border-left: 4px solid var(--primary-accent);
-        }
-
-        .solution-card h2 {
-            font-weight: 400;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .solution-card article.solution-card {
-            background: transparent;
-            padding: 1.5rem 0 0 0;
-            border: none;
-            margin-top: 1.5rem;
-            border-top: 1px solid var(--soft-border);
-        }
-
-        .solution-card article.solution-card h2 {
-            font-family: system-ui, sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-
-        
-        #User-Architecture p, #Value-Proposition p {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin-bottom: 2rem;
-        }
-
-        #Value-Proposition ul {
-            list-style: none;
-            margin: 2rem 0;
-        }
-
-        #Value-Proposition ul li {
-            font-size: 1.2rem;
-            padding: 0.5rem 0 0.5rem 1.5rem;
-            position: relative;
-        }
-
-        #Value-Proposition ul li::before {
-            content: "—";
-            position: absolute;
-            left: 0;
-            color: var(--primary-accent);
-        }
-
-        
-        #Market-Impact table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 2rem;
-            font-family: system-ui, sans-serif;
-        }
-
-        th {
-            text-align: left;
-            padding: 1.5rem 1rem;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            opacity: 0.5;
-            border-bottom: 2px solid var(--text-main);
-        }
-
-        td {
-            padding: 2rem 1rem;
-            font-size: 1.1rem;
-            border-bottom: 1px solid var(--soft-border);
-        }
-
-        tr:hover td {
-            background: rgba(0, 0, 0, 0.01);
-        }
-        
-        #Future-Vision > p{
-            font-size: 19.2px;
-            font-weight: 400;
-            letter-spacing: 3px;
-        }
-
-        
-        #contact {
-            background-color: var(--panel-surface);
-            width: 90%;
-            margin: 4rem auto;
-            border: 3px dotted  black;
-            border-radius: 12px;
-            background-image: url('images/smiley garbage bin.jpg');
-            background-position-x: right;
-            background-repeat: no-repeat;
-            background-position: right 360px ;
-            background-size: 60% auto;
-        }
-
-        #contact p {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-            max-width: 50%;
-        }
-
-        #contact-form {
-            display: flex;
-            flex-direction: column;
-            max-width: 50%; 
-            gap: 1.5rem;
-        }
-
-        #contact-form label {
-            font-family: system-ui, sans-serif;
-            font-size: 0.9rem;
-            font-weight: 500;
-            opacity: 0.8;
-        }
-
-        #contact-form input, #contact-form textarea {
-            width: 100%;
-            padding: 1.2rem;
-            background: var(--bg-base);
-            border: 1px solid var(--soft-border);
-            font-family: system-ui, sans-serif;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        #contact-form input:focus, #contact-form textarea:focus {
-            outline: none;
-            border-color: var(--text-main);
-        }
-
-        #contact-form button {
-            align-self: flex-start;
-            background: var(--text-main);
-            color: var(--bg-base);
-            border: none;
-            padding: 1.2rem 2.8rem;
-            font-family: system-ui, sans-serif;
-            font-weight: 500;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        #contact-form button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        }
-
-        footer {
-            padding: 4rem 12%;
-            background: var(--bg-base);
-            font-family: system-ui, sans-serif;
-            font-size: 0.85rem;
-            opacity: 0.5;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
     <header>
-        <h1>kanairo klean</h1>
-        <nav>
+        <p class="brand">Kanairo Klean</p>
+        <nav class="navbar">
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
+                <li><a href="about.html" aria-current="page">About Us</a></li>
                 <li><a href="compliance.html">Compliance</a></li>
                 <li><a href="dashboard.html">Dashboard</a></li>
                 <li><a href="marketplace.html">Marketplace</a></li>
             </ul>
         </nav>
-    </header>  
+    </header>
 
     <main>
-        <section id="about-Kanairo">
-            <h1>About us</h1>
-            <p>
-                Kanairo is a specialized digital marketplace designed to formalize Nairobi’s
-                informal waste sector. By transforming physical waste into a traceable digital
-                asset, the platform bridges the gap between independent collectors 
-                and industrial recycling plants. The app replaces inefficient brokerage with a real-time 
-                inventory system, ensuring price transparency and financial liquidity.
-            </p>
+        <section id="about-hero" class="content-hero">
+            <span class="eyebrow reveal">— Our Mission</span>
+            <h1 class="section-header content-hero-title reveal d1">Formalising<br><span class="accent">Nairobi's</span><br>Waste Economy</h1>
+            <p class="content-hero-sub reveal d2">Kanairo was built on a simple belief: the people doing the
+                hardest work in Nairobi's recycling chain deserved the best price, instantly. We're replacing
+                asymmetric information with radical transparency.</p>
         </section>
 
-        <section id="Core-Problem">
-            <h1>Core Challenges & System Architecture</h1>
-            
-            <article class="problem-card">
-                <h1>1. Asymmetric Information:</h1>
-                <p>Collectors sell materials at arbitrary prices due to a lack of market data.</p>
-            </article>
-            
-            <article class="problem-card">
-                <h1>2. Liquidity Delays:</h1>
-                <p>Independent collectors face significant gaps in receiving payments.</p>
-            </article>
-            
-            <article class="problem-card">
-                <h1>3. Unpredictable Supply:</h1>
-                <p>Industrial recyclers suffer from frequent supply shocks.</p>
-            </article>
-            
-            <article class="problem-card">
-                <h1>4. Inefficient Brokerage:</h1>
-                <p>The current waste economy relies on manual, inefficient middleman structures.</p>
-            </article>
-            
-            <article class="problem-card">
-                <h1>5. Customer Segments:</h1>
-                <p>Primary Users (Nodes): Local aggregators and yard owners who act as digital nodes. Beneficiaries: Thousands of independent street-level collectors.</p>
-            </article>
-            
-            <article class="problem-card">
-                <h1>6. Industrial Clients:</h1>
-                <p>Recycling plants requiring steady, traceable supply chains. Corporate Clients: Companies requiring Extended Producer Responsibility (EPR) compliance.</p>
-            </article>
-            
-            <div class="solution-card">
-                <h2>Kanairo's Solution:</h2>
-                <p>Kanairo solves this through:</p>
-                
-                <article class="solution-card">
-                    <h2><strong>1. Price Discovery:</strong></h2>
-                    <p>Real-time market rates for PET, HDPE, and E-Waste.</p>
-                </article>
-                
-                <article class="solution-card">
-                    <h2><strong>2. Verified Inventory:</strong></h2>
-                    <p>Digital logging of Material Hotspots across the city.</p>
-                </article>
-                
-                <article class="solution-card">
-                    <h2><strong>3. Instant Settlement:</strong></h2>
-                    <p>Automated M-Pesa payouts triggered at the point of weight verification.</p>
-                </article>
+        <section id="mission-stats">
+            <div class="impact-grid" id="mission-stats-root"></div>
+        </section>
+
+        <section id="problem-solution">
+            <div class="ps-grid">
+                <div class="reveal">
+                    <span class="eyebrow problem-eyebrow">— The Problem</span>
+                    <h2 class="section-header">Asymmetric Information. Liquidity Delays.</h2>
+                    <p class="ps-copy">Nairobi's 60,000+ informal waste collectors face an unfair market.
+                        Brokers control price information, taking margins of 30–60% by exploiting information
+                        asymmetry between collectors and recyclers.</p>
+                    <p class="ps-copy">Collectors wait days — sometimes weeks — for payment. Recyclers face
+                        unpredictable supply. The system punishes everyone except the middleman.</p>
+                </div>
+                <div class="reveal reveal-r">
+                    <span class="eyebrow">— The Solution</span>
+                    <h2 class="section-header">Radical Transparency. Instant Settlement.</h2>
+                    <div class="solution-list">
+                        <div class="solution-item">
+                            <span class="solution-icon">📊</span>
+                            <div><h4>Price Discovery</h4><p>Live exchange rates for all material types, visible to every participant in the chain.</p></div>
+                        </div>
+                        <div class="solution-item">
+                            <span class="solution-icon">⚖</span>
+                            <div><h4>Verified Weight</h4><p>Digital weight logs at certified Micro-Hubs eliminate disputes at point of transaction.</p></div>
+                        </div>
+                        <div class="solution-item">
+                            <span class="solution-icon">💳</span>
+                            <div><h4>Instant M-Pesa</h4><p>Automated settlement the moment weight is confirmed — no waiting, no chasing payments.</p></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="User-Architecture">
-            <h1>User Architecture: The Proxy Model</h1>
-            <p>
-                To address the device gap among street-level collectors, Kanairo utilizes a 
-                <strong>"Micro-Hub" strategy.</strong> Local aggregators (yard owners) serve as the primary
-                app users, acting as digital nodes for thousands of collectors.
-            </p>
-            <p>
-                <strong>Key Metric:</strong> By digitizing these nodes, Kanairo creates a verified paper trail necessary
-                for Extended Producer Responsibility (EPR) compliance, turning environmental
-                cleanup into a tracked industrial supply chain.
-            </p>
-        </section>
-
-        <section id="Market-Impact">
-            <h1>Market Impact</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>STAKEHOLDER</th>
-                        <th>VALUE PROPOSITION</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Collectors</strong></td>
-                        <td>Up to 30% increase in earnings via direct fair market rates.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Corporates</strong></td>
-                        <td>Streamlined EPR compliance with verifiable waste recovery data.</td>
-                    </tr>
-                    <tr>    
-                        <td><strong>Environment</strong></td>
-                        <td>Reduced landfill pressure through incentivized urban recovery.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Recyclers</strong></td>
-                        <td>Predictable supply chains and 100% material traceability.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <section id="Future-Vision">
-            <h1>Future Vision</h1>
-            <p>
-                By 2032, Kanairo aims to formalize Nairobi’s informal waste sector, creating a 
-                transparent, efficient marketplace that benefits collectors, recyclers, and the environment. 
-                The platform's success will be measured by increased collector earnings, improved supply chain 
-                reliability for recyclers, and significant reductions in landfill waste.
-            </p>
-        </section>
-        
-        <section id="Value-Proposition">
-            <h1>Value Proposition</h1>
-            <p>
-                Kanairo provides a comprehensive solution that addresses the challenges of the 
-                informal waste sector by creating a transparent, efficient marketplace for all stakeholders.
-            </p>
-            <h2>Why Choose Kanairo?</h2>
-            <p>
-                Kanairo stands out by offering:
-            </p>
-            <ul>
-                <li>A unique combination of real-time price discovery.</li>
-                <li>Verified inventory tracking.</li>
-                <li>Instant settlement mechanisms.</li>
-                <li>EPR compliance support.</li>
-                <li>Environmental impact reduction.</li>
-                <li>Empowerment of street-level collectors.</li>
-                <li>Reliable supply chains for recyclers.</li>
-                <li>Transparent, efficient waste management system.</li>
-            </ul>
-            <p>
-                This ensures that all stakeholders benefit from a fair, transparent, and efficient waste management system.
-            </p>
+        <section id="team">
+            <div class="reveal" style="margin-bottom: 2.5rem;">
+                <span class="eyebrow">— The Team</span>
+                <h2 class="section-header">Built In Nairobi</h2>
+            </div>
+            <div class="team-grid" id="team-root"></div>
         </section>
 
         <section id="contact">
-            <h1>Contact Us</h1>
+            <h2>Contact Us</h2>
             <p>Have questions or want to learn more about Kanairo? Get in touch with us!</p>
 
             <form id="contact-form">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" value="John Doe" required>
-                
+
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" value="john.doe@example.com" required>
 
                 <label for="message">Message:</label>
-                <textarea id="message" name="message" rows="5" required>Write your message here...</textarea>       
+                <textarea id="message" name="message" rows="5" required>Write your message here...</textarea>
                 <button type="submit">Send Message</button>
             </form>
         </section>
@@ -522,5 +109,9 @@
             });
         </script>
     </footer>
+
+    <!-- No React on this page — about.js is plain JS, no islands here -->
+    <script src="js/reveal.js"></script>
+    <script type="module" src="js/about.js"></script>
 </body>
 </html>
