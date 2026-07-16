@@ -1,9 +1,5 @@
-// Shared kanairo_hotspots contract.
-// Builder B (Dashboard) writes to this store from the "Log New Material"
-// form; Builder C (Marketplace) and Builder A (Home) read from it for live
-// rates/stock. Same shape js/inventory.js already uses:
-//   [{ name: string, materials: [{ name: string, quantity: number }] }]
-import { loadSiteData } from './data-loader.js';
+
+import { loadSiteData } from './data-loader.jsx';
 
 const KEY = 'kanairo_hotspots';
 const LOCAL_EVENT = 'kanairo:hotspots-changed';
@@ -15,15 +11,11 @@ export function getHotspots() {
 
 export function saveHotspots(hotspots) {
     localStorage.setItem(KEY, JSON.stringify(hotspots));
-    // The native "storage" event only fires in OTHER tabs/pages, not this
-    // one — dispatch a local event too so same-page islands (e.g. the log
-    // form and the Material Mix chart both on Dashboard) stay in sync.
+    
     window.dispatchEvent(new CustomEvent(LOCAL_EVENT));
 }
 
-// Fires when this page OR another tab/page changes the store (e.g.
-// Dashboard logging inventory while Marketplace is open elsewhere).
-// Returns an unsubscribe function.
+
 export function onHotspotsChange(callback) {
     const handler = (e) => {
         if (e.type === LOCAL_EVENT || e.key === KEY) callback(getHotspots());
@@ -36,9 +28,7 @@ export function onHotspotsChange(callback) {
     };
 }
 
-// Totals per material name, summed across every hotspot — shared by
-// Dashboard (Material Mix / Inventory bars) and Marketplace (stock per
-// price card).
+
 export function aggregateInventory(hotspots) {
     const map = new Map();
     hotspots.forEach((hs) => hs.materials.forEach((m) => {
@@ -47,8 +37,7 @@ export function aggregateInventory(hotspots) {
     return Array.from(map, ([name, quantity]) => ({ name, quantity }));
 }
 
-// Deducts a purchased quantity from the store, spread across whichever
-// hotspots hold it (used by the Marketplace "Buy Now" flow).
+
 export function deductInventory(materialName, quantity) {
     const hotspots = getHotspots();
     let remaining = quantity;
@@ -64,10 +53,7 @@ export function deductInventory(materialName, quantity) {
     saveHotspots(hotspots);
 }
 
-// First-ever visit: seed a starting inventory from data/site-data.json so
-// the Marketplace isn't showing "Out of Stock" on every single card before
-// anyone has logged anything on the Dashboard. Real user edits (via the Log
-// Material form or a purchase) always take over from here.
+
 if (localStorage.getItem(KEY) === null) {
     loadSiteData().then((data) => {
         if (localStorage.getItem(KEY) === null && data.defaultHotspots) {

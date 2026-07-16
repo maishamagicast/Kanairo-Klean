@@ -1,7 +1,4 @@
-/* Owned by Builder B — Dashboard.
-   Sidebar + main grid layout, KPI cards, charts, material mix, hub map,
-   activity feed, transactions table, log-material form.
-   Shared tokens/animations/utility classes live in css/styles.css. */
+
 
 .dash-shell {
     display: grid;
@@ -135,7 +132,7 @@
 
 .dash-content { padding: 28px 32px; display: flex; flex-direction: column; gap: 26px; }
 
-/* KPI row */
+
 .kpi-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 2px; }
 .kpi-card { background: var(--surface); border: 1px solid var(--outline-variant); padding: 22px 20px; }
 .kpi-label { font-family: var(--font-mono); font-size: 0.62rem; color: var(--outline); letter-spacing: 0.15em; text-transform: uppercase; display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
@@ -147,7 +144,7 @@
 .kpi-spark > span { flex: 1; border-radius: 1px 1px 0 0; background: rgba(34, 197, 94, 0.35); }
 .kpi-spark > span.end { background: var(--primary); }
 
-/* Material Mix donut */
+
 .mix-wrap { padding: 20px; display: flex; align-items: center; gap: 20px; }
 .mix-donut { width: 96px; height: 96px; border-radius: 50%; flex-shrink: 0; position: relative; }
 .mix-donut::after { content: ""; position: absolute; inset: 22px; background: var(--surface); border-radius: 50%; }
@@ -156,7 +153,7 @@
 .mix-legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .mix-legend-row span:last-child { margin-left: auto; font-family: var(--font-mono); font-size: 0.68rem; color: var(--outline); }
 
-/* Inventory bars */
+
 .inv-bars { padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
 .inv-bar-row { display: flex; align-items: center; gap: 14px; }
 .inv-bar-mat { font-family: var(--font-mono); font-size: 0.66rem; color: var(--on-surface-variant); width: 110px; flex-shrink: 0; text-transform: uppercase; }
@@ -164,7 +161,7 @@
 .inv-bar-track > span { display: block; height: 100%; background: var(--primary); border-radius: 2px; transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
 .inv-bar-qty { font-family: var(--font-mono); font-size: 0.68rem; color: var(--outline); width: 80px; text-align: right; flex-shrink: 0; }
 
-/* Hub map */
+
 .hub-map { position: relative; height: 260px; background-image: linear-gradient(rgba(34, 197, 94, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 197, 94, 0.03) 1px, transparent 1px); background-size: 24px 24px; overflow: hidden; }
 .hub-map::before { content: ""; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.3), transparent); animation: scanline 4s linear infinite; pointer-events: none; }
 
@@ -178,7 +175,7 @@
 .hub-pin.off .hub-pin-dot { background: var(--outline); box-shadow: none; animation: none; }
 .hub-pin-label { font-family: var(--font-mono); font-size: 0.55rem; color: var(--outline); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; background: var(--surface); padding: 1px 4px; border: 1px solid rgba(34, 197, 94, 0.1); border-radius: 1px; }
 
-/* Activity feed */
+
 .activity-row { display: flex; gap: 14px; padding: 12px 20px; border-bottom: 1px solid rgba(34, 197, 94, 0.05); }
 .activity-row:last-child { border-bottom: none; }
 .activity-icon { width: 30px; height: 30px; border-radius: 50%; background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.15); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; margin-top: 2px; }
@@ -187,7 +184,7 @@
 .activity-meta { font-family: var(--font-mono); font-size: 0.62rem; color: var(--outline); }
 .activity-amt { font-family: var(--font-mono); font-size: 0.78rem; color: var(--primary); flex-shrink: 0; margin-top: 2px; }
 
-/* Transactions table */
+
 .txn-head-row, .txn-row {
     display: grid;
     grid-template-columns: 90px 1fr 1fr 90px 1fr 90px;
@@ -206,7 +203,7 @@
 .txn-wt { font-family: var(--font-mono); font-size: 0.7rem; color: var(--outline); }
 .txn-amt { font-family: var(--font-mono); font-size: 0.78rem; color: var(--primary); }
 
-/* Log-material form (React island, styled to match theme) */
+
 .dash-form { padding: 14px 20px 22px; display: flex; flex-wrap: wrap; gap: 14px; align-items: end; }
 .dash-form-field { flex: 1 1 180px; }
 .dash-form-field label { display: block; margin-bottom: 6px; font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--outline); }
