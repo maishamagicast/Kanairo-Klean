@@ -35,10 +35,20 @@ A digital marketplace platform connectinh informal waste collectors, local aggre
 | |---right tree.avif
 | |--smiley garbage bin.jpg
 |---js/
+| |---about.js
 | |---analytics.js
+| |---compliance.js
+| |---data-loader.js
+| |---home-static.js
+| |---home.js
 | |---inventory.js
+| |---market-data.js
 | |--marketplace.js
-| |--payments.js
+| |---payments.js
+| |---react-shared.js
+| |---reveal.js
+| |---storage.js
+|---.gitignore
 |---about.html
 |---compliance.html
 |---dashboard.html
