@@ -63,6 +63,8 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+
+
 ::-webkit-scrollbar { width: 3px; height: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(34, 197, 94, 0.18); border-radius: 2px; }
@@ -123,9 +125,7 @@ main > section::after {
     background: linear-gradient(180deg, rgba(34, 197, 94, 0.04), transparent 45%);
 }
 
-/* Keep grids/tables/forms readable on wide screens instead of stretching
-   thin across the whole viewport. Headings, copy and buttons are left
-   alone since they already size themselves sensibly. */
+
 main > section > div:not(.user-container),
 main > section > table,
 main > section > form,
@@ -177,7 +177,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
+    gap: 15rem;
     padding: 0.75rem clamp(var(--space-mobile), 6vw, var(--space-desktop));
     background: rgba(6, 14, 6, 0.55);
     backdrop-filter: blur(14px);
@@ -196,9 +196,9 @@ header.scrolled {
     margin: 0;
     flex-shrink: 0;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
+    font-size: 1.7rem;
+    font-weight: bold;
+    letter-spacing: 10px;
     color: var(--primary);
     text-transform: uppercase;
     white-space: nowrap;
@@ -238,10 +238,10 @@ header .navbar a {
     display: inline-block;
     white-space: nowrap;
     text-decoration: none;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.67rem;
+    font-family: sans-serif, monospace;
+    font-size: 0.75rem;
     font-weight: 700;
-    letter-spacing: 0.09em;
+    letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--on-surface-variant);
     opacity: 0.9;
@@ -506,12 +506,7 @@ footer {
     }
 }
 
-/* ════════════════════════════════════════════════════════════
-   SHARED COMPONENTS & MOTION
-   Foundation-owned building blocks — reveal-on-scroll, the
-   status dot, ticker, and card/tab treatments — reused across
-   whichever page each builder is on.
-════════════════════════════════════════════════════════════ */
+
 
 @keyframes pulseDot {
     0%, 100% { opacity: 1; transform: scale(1); }
@@ -533,7 +528,7 @@ footer {
     to { opacity: 1; }
 }
 
-/* Status dot — used by js/react-shared.js's Dot component */
+
 .ldot {
     width: 6px;
     height: 6px;
@@ -550,7 +545,7 @@ footer {
 }
 
 /* Scroll-reveal — toggled by js/reveal.js, no React involved */
-.reveal,
+/* .reveal,
 .reveal-r {
     opacity: 0;
     transition: opacity 0.7s ease, transform 0.7s ease;
@@ -568,14 +563,14 @@ footer {
 .reveal.d1, .reveal-r.d1 { transition-delay: .08s; }
 .reveal.d2, .reveal-r.d2 { transition-delay: .16s; }
 .reveal.d3, .reveal-r.d3 { transition-delay: .24s; }
-.reveal.d4, .reveal-r.d4 { transition-delay: .32s; }
+.reveal.d4, .reveal-r.d4 { transition-delay: .32s; } */
 
 @media (prefers-reduced-motion: reduce) {
     .ldot { animation: none; }
     .reveal, .reveal-r { transition: none; opacity: 1; transform: none; }
 }
 
-/* Ticker — the scrolling price strip, built by Builder A, reused on Marketplace */
+
 .ticker-wrap {
     overflow: hidden;
 }
@@ -591,8 +586,6 @@ footer {
     animation-play-state: paused;
 }
 
-/* Generic hoverable card for any React-rendered grid
-   (price cards, KPI cards, hotspots) */
 .k-card {
     background: var(--surface);
     border: 1px solid var(--outline-variant);
@@ -607,7 +600,7 @@ footer {
     box-shadow: 0 8px 32px rgba(34, 197, 94, 0.06);
 }
 
-/* Underlined tab — for any tab row built with React (material selector, stakeholder tabs) */
+
 .k-tab {
     position: relative;
     background: none;
@@ -641,7 +634,7 @@ footer {
     width: 100%;
 }
 
-/* Status pill — settled/pending/failed, matches js/react-shared.js's Pill component */
+
 .pill {
     font-family: var(--font-mono);
     font-size: 0.6rem;
@@ -656,7 +649,7 @@ footer {
 .pill-pending { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
 .pill-failed  { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
 
-/* Generic bordered card — reused by Dashboard and Marketplace */
+
 .dash-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
 .dash-row-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: 2px; }
 
@@ -668,9 +661,6 @@ footer {
 
 .chart-wrap { padding: 16px 20px 20px; height: 200px; }
 
-/* ════════════════════════════════════════════════════════════
-   HOME PAGE — Builder A
-════════════════════════════════════════════════════════════ */
 
 .eyebrow {
     display: block;
@@ -701,7 +691,7 @@ footer {
     font-size: 0.85rem;
 }
 
-/* Hero */
+
 .hero-v2 {
     position: relative;
     min-height: 100vh;
@@ -853,7 +843,7 @@ footer {
     background: rgba(34, 197, 94, 0.15);
 }
 
-/* Section head (eyebrow + title on left, meta/link on right) */
+
 .section-head {
     display: flex;
     align-items: flex-end;
@@ -874,7 +864,7 @@ footer {
     color: var(--outline);
 }
 
-/* Live rate cards (#live-market) — single horizontal row */
+
 .rates-grid {
     display: flex;
     gap: 2px;
@@ -962,7 +952,7 @@ footer {
 
 .rate-card-track.down > span { background: #ef4444; }
 
-/* Process steps */
+
 .step {
     background: var(--surface);
     border: 1px solid var(--outline-variant);
@@ -1010,7 +1000,7 @@ footer {
 
 .step p { font-size: 0.83rem; color: var(--outline); line-height: 1.75; margin: 0; }
 
-/* Hotspot preview tiles */
+
 .hotspots-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -1068,7 +1058,7 @@ footer {
     background: var(--primary);
 }
 
-/* Stakeholder tabs (React island) */
+
 .stake-tabs {
     display: flex;
     border-bottom: 1px solid var(--outline-variant);
@@ -1166,7 +1156,7 @@ footer {
 .stake-row span:nth-child(3) { font-family: var(--font-mono); font-size: 0.68rem; color: var(--outline); }
 .stake-row span:last-child { font-family: var(--font-mono); font-size: 0.75rem; color: var(--primary); text-align: right; }
 
-/* Impact numbers */
+
 .impact-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -1193,7 +1183,7 @@ footer {
 
 .impact-blk p { font-size: 0.78rem; color: var(--outline); line-height: 1.7; margin: 0; }
 
-/* EPR CTA banner */
+
 .epr-box {
     border: 1px solid rgba(34, 197, 94, 0.18);
     border-radius: var(--radius-md);
@@ -1220,7 +1210,7 @@ footer {
 
 .epr-ctas { display: flex; gap: 12px; flex-wrap: wrap; position: relative; z-index: 1; }
 
-/* Waitlist */
+
 .waitlist-inner { max-width: 560px; margin: 0 auto; text-align: center; }
 .waitlist-inner p { margin: 0 auto 2rem; }
 
@@ -1242,9 +1232,6 @@ footer {
     .stake-stats { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* ════════════════════════════════════════════════════════════
-   MARKETPLACE PAGE — Builder C
-════════════════════════════════════════════════════════════ */
 
 .mkt-ticker-sticky {
     position: sticky;
@@ -1281,7 +1268,7 @@ footer {
     align-items: start;
 }
 
-/* Selected-material hero */
+
 .mkt-hero-card { padding: 26px 26px 22px; }
 .mkt-hero-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
 .mkt-hero-id { font-family: var(--font-mono); font-size: 0.68rem; color: var(--outline); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
@@ -1292,7 +1279,7 @@ footer {
 .mkt-hero-change.up { background: rgba(34, 197, 94, 0.1); color: var(--primary); }
 .mkt-hero-change.down { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
 
-/* Search + price cards grid */
+
 .mkt-search { margin: 20px 0; }
 .mkt-search input { max-width: 360px; }
 
@@ -1315,7 +1302,7 @@ footer {
 }
 .price-card-buy:disabled { opacity: 0.4; cursor: not-allowed; }
 
-/* Order book */
+
 .ob-head-row, .ob-row { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 8px 16px; font-size: 0.72rem; }
 .ob-head-row span { font-family: var(--font-mono); font-size: 0.58rem; color: var(--outline); letter-spacing: 0.1em; text-transform: uppercase; }
 .ob-head-row span:nth-child(2) { text-align: center; }
@@ -1332,7 +1319,7 @@ footer {
 .ob-spread { display: flex; justify-content: space-between; padding: 8px 16px; background: rgba(34, 197, 94, 0.04); border-top: 1px solid rgba(34, 197, 94, 0.1); border-bottom: 1px solid rgba(34, 197, 94, 0.1); font-family: var(--font-mono); font-size: 0.68rem; }
 .ob-spread span:last-child { color: var(--primary); }
 
-/* Live trade feed */
+
 .trade-feed-wrap { max-height: 280px; overflow-y: auto; }
 .trade-empty { padding: 16px; font-family: var(--font-mono); font-size: 0.62rem; color: var(--outline); text-transform: uppercase; letter-spacing: 0.05em; }
 .trade-row { display: grid; grid-template-columns: 56px 1fr 1fr; padding: 9px 16px; border-bottom: 1px solid rgba(34, 197, 94, 0.03); align-items: center; font-size: 0.7rem; }
@@ -1346,9 +1333,6 @@ footer {
     .mkt-grid { grid-template-columns: 1fr; }
 }
 
-/* ════════════════════════════════════════════════════════════
-   ABOUT & COMPLIANCE PAGES — Builder D
-════════════════════════════════════════════════════════════ */
 
 .content-hero {
     max-width: 900px;
@@ -1375,7 +1359,7 @@ footer {
     padding: 64px 24px;
 }
 
-/* Problem / solution two-column */
+
 .ps-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1392,7 +1376,7 @@ footer {
 .solution-item h4 { font-family: var(--font-display); font-weight: 800; font-size: 0.95rem; text-transform: uppercase; color: var(--on-surface); margin: 0 0 4px; letter-spacing: 0.3px; }
 .solution-item p { font-size: 0.8rem; color: var(--outline); line-height: 1.65; margin: 0; }
 
-/* Team grid */
+
 .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 2px; }
 .team-card { padding: 28px 24px; }
 .team-avatar {
@@ -1406,13 +1390,13 @@ footer {
 .team-role { font-family: var(--font-mono); font-size: 0.62rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 12px; }
 .team-bio { font-size: 0.8rem; color: var(--outline); line-height: 1.7; margin: 0; }
 
-/* Compliance: key deadline callout */
+
 .key-deadline-box { padding: 20px 24px; border: 1px solid rgba(34, 197, 94, 0.2); background: rgba(34, 197, 94, 0.04); border-radius: var(--radius-md); margin-top: 8px; }
 .key-deadline-title { font-family: var(--font-display); font-weight: 800; font-size: 1rem; text-transform: uppercase; color: var(--on-surface); margin: 0 0 8px; }
 .key-deadline-box p:last-child { font-size: 0.8rem; color: var(--outline); line-height: 1.7; margin: 0; }
 .key-deadline-box strong { color: var(--primary); }
 
-/* Compliance: regulatory timeline */
+
 .timeline { position: relative; padding-left: 32px; }
 .timeline::before { content: ""; position: absolute; left: 8px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--primary), rgba(34, 197, 94, 0.1)); }
 .timeline-item { position: relative; margin-bottom: 32px; }
@@ -1425,7 +1409,7 @@ footer {
 .timeline-item.done h4 { color: var(--on-surface); }
 .timeline-item p { font-size: 0.78rem; color: var(--outline); line-height: 1.7; margin: 0; }
 
-/* Compliance: feature grid */
+
 .feature-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2px; }
 .feature-card { padding: 26px 22px; }
 .feature-check {

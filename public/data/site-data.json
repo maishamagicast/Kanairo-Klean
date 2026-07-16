@@ -31,19 +31,19 @@
         "howItWorks": [
             {
                 "num": "01",
-                "icon": "⚖",
+                "icon": "♻️",
                 "title": "Collect & Weigh",
                 "body": "Street collectors bring materials to a verified Micro-Hub. Weight is logged digitally at point of delivery — no paperwork, no disputes."
             },
             {
                 "num": "02",
-                "icon": "📊",
+                "icon": "♻️",
                 "title": "Price Discovery",
                 "body": "Real-time market rates are fetched live from the Kanairo exchange. No more arbitrary broker pricing — PET, HDPE, E-Waste, all transparent."
             },
             {
                 "num": "03",
-                "icon": "📱",
+                "icon": "♻️",
                 "title": "Instant M-Pesa",
                 "body": "Payment is triggered automatically upon weight verification. Funds arrive in the collector's M-Pesa wallet in under 30 seconds."
             }
@@ -123,12 +123,12 @@
             { "day": "Sun", "revenue": 89000, "weight": 2640 }
         ],
         "activity": [
-            { "icon": "⚖", "title": "Dandora Hub weighed 340 kg PET", "meta": "2 min ago", "amt": "KES 9,690" },
-            { "icon": "💳", "title": "M-Pesa settled — James Otieno", "meta": "5 min ago", "amt": "KES 353" },
-            { "icon": "📦", "title": "Ruiru Depot listed 1,200 kg Cardboard", "meta": "12 min ago", "amt": "KES 14,400" },
-            { "icon": "🔄", "title": "Industrial Area sold 41 kg E-Waste", "meta": "18 min ago", "amt": "KES 4,920" },
-            { "icon": "💳", "title": "M-Pesa settled — Amina Wanjiku", "meta": "24 min ago", "amt": "KES 870" },
-            { "icon": "⚖", "title": "Gikomba Yard weighed 210 kg Paper", "meta": "31 min ago", "amt": "KES 2,520" }
+            { "icon": "♻️", "title": "Dandora Hub weighed 340 kg PET", "meta": "2 min ago", "amt": "KES 9,690" },
+            { "icon": "♻️", "title": "M-Pesa settled — James Otieno", "meta": "5 min ago", "amt": "KES 353" },
+            { "icon": "♻️", "title": "Ruiru Depot listed 1,200 kg Cardboard", "meta": "12 min ago", "amt": "KES 14,400" },
+            { "icon": "♻️", "title": "Industrial Area sold 41 kg E-Waste", "meta": "18 min ago", "amt": "KES 4,920" },
+            { "icon": "♻️", "title": "M-Pesa settled — Amina Wanjiku", "meta": "24 min ago", "amt": "KES 870" },
+            { "icon": "♻️", "title": "Gikomba Yard weighed 210 kg Paper", "meta": "31 min ago", "amt": "KES 2,520" }
         ],
         "transactions": [
             { "id": "TXN-4821", "mat": "PET Plastic", "hub": "Dandora Hub", "wt": "340 kg", "amt": 9690, "status": "settled" },

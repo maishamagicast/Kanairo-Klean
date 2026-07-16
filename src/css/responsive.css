@@ -1,7 +1,4 @@
-/* Owned by Builder D — About, Compliance & QA.
-   Cross-page responsive rules: mobile nav, grid breakpoints, font clamps.
-   Loaded last on every page so it can override page-specific styles at
-   narrow widths. */
+
 
 @media (max-width: 1024px) {
     .dash-row-2,
@@ -11,8 +8,6 @@
 }
 
 @media (max-width: 720px) {
-    /* Header: let the brand + nav + status icon wrap instead of
-       squeezing onto one line */
     header {
         flex-wrap: wrap;
         row-gap: 0.5rem;
@@ -36,7 +31,7 @@
         font-size: 0.6rem;
     }
 
-    /* Section padding tightens up on phones */
+    
     #marketplace-hero,
     #marketplace-app,
     .content-hero,

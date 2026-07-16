@@ -1,8 +1,5 @@
-// Market reference data — fetched from data/site-data.json, not hardcoded.
-// Read by Home, Dashboard, and Marketplace islands. Live inventory
-// (kanairo_hotspots) is layered on top of this via js/storage.js; this file
-// is just the market-rate / hotspot-showcase side.
-import { loadSiteData } from './data-loader.js';
+
+import { loadSiteData } from './data-loader.jsx';
 
 export async function getMaterials() {
     const data = await loadSiteData();

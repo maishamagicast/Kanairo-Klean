@@ -1,12 +1,8 @@
-# Kanairo-Klean ♻️
-A digital marketplace platform connectinh informal waste collectors, local aggregator yards and industrial recyclers - bringing price transparency , instant payments, and full material traceability to the waste economy.
+# React + Vite
 
-## The Problem
-- **Asymmetric Information** - Collectors sell materials at arbitrary prices due to a lack of market data.
-- **Liquidity Delays** - Independent collectors face significant gaps in receiving payments. 
-- **Unpredictable Supply** - Industrial recyclers suffer from frequent supply shocks.  
-- **Inefficient Brokerage** - The current waste economy relies on manual, inefficient middleman structures.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+Currently, two official plugins are available:
 ## Our Solution
 - **Price Discovery** - Real-time market rates for PET, HDPE, and E-Waste. 
 - **Verified Inventory** - Digital logging of "Material Hotspots" for real-time tracking.
@@ -93,7 +89,13 @@ A digital marketplace platform connectinh informal waste collectors, local aggre
 - **Marketplace Efficiency** — Capturing value by replacing inefficient brokerage with a streamlined digital system.
 - **Traceability Data** — Providing verified data to meet 2026 EPR compliance requirements.
 
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
+## React Compiler
 
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
+## Expanding the ESLint configuration
 
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
