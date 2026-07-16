@@ -1,8 +1,12 @@
-# React + Vite
+# Kanairo-Klean ♻️
+A digital marketplace platform connecting informal waste collectors, local aggregator yards, and industrial recyclers — bringing price transparency, instant payments, and full material traceability to the waste economy.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## The Problem
+- **Asymmetric Information** - Collectors sell materials at arbitrary prices due to a lack of market data.
+- **Liquidity Delays** - Independent collectors face significant gaps in receiving payments. 
+- **Unpredictable Supply** - Industrial recyclers suffer from frequent supply shocks.  
+- **Inefficient Brokerage** - The current waste economy relies on manual, inefficient middleman structures.
 
-Currently, two official plugins are available:
 ## Our Solution
 - **Price Discovery** - Real-time market rates for PET, HDPE, and E-Waste. 
 - **Verified Inventory** - Digital logging of "Material Hotspots" for real-time tracking.
@@ -10,61 +14,56 @@ Currently, two official plugins are available:
 
 
 ## Who it is For
-|---|---|
-| **Primary Users (Nodes)** | Local aggregators and yard owners who act as digital nodes |
-| **Beneficiaries**| Thousands of independent street-level collectors |
-| **Industrial Clients** | Recycling plants requiring steady,traceable supply chains |
-| **Corporate Clients** | Companies requiring Extended Producer Responsibility (EPR) compliance |
+| Primary Users (Nodes) | Beneficiaries | Industrial Clients | Corporate Clients |
+| :--- | :--- | :--- | :--- |
+| Local aggregators and yard owners who act as digital nodes | Thousands of independent street-level collectors | Recycling plants requiring steady, traceable supply chains | Companies requiring Extended Producer Responsibility (EPR) compliance |
 
 
 ## Key Difference
 - **Digital Circular Ledger** — Transforms physical waste into a traceable digital asset.
 - **The "Micro-Hub" Strategy** — Bridges the device gap by using yard owners as proxies for collectors who lack smartphones/data access.
-- **EPR Compliance** — Creates a verified paper trail aligned with incoming 2026 environmental regulations.
-- **First-Mover Advantage** — Purpose-built compliance tooling ahead of the 2026 EPR standards, combined with a proxy-user model that sidesteps the informal sector's device-access barrier.
+- **EPR Compliance** — Creates a verified paper trail aligned with current 2026 environmental regulations.
+- **First-Mover Advantage** — Purpose-built compliance tooling aligned with active 2026 EPR standards, combined with a proxy-user model that sidesteps the informal sector's device-access barrier.
 
 
-## Project structure
-|-------css/
-|---images/
-| |---garbage favicon.png
-| |---right tree.avif
-| |--smiley garbage bin.jpg
-|---js/
-| |---about.js
-| |---analytics.js
-| |---compliance.js
-| |---data-loader.js
-| |---home-static.js
-| |---home.js
-| |---inventory.js
-| |---market-data.js
-| |--marketplace.js
-| |---payments.js
-| |---react-shared.js
-| |---reveal.js
-| |---storage.js
-|---.gitignore
-|---about.html
-|---compliance.html
-|---dashboard.html
-|---index.html
-|---marketplace.html
-|---README.md
-
-## Pages
-- ** `index.html`** -Landing page
-- ** `dashboard.html`** - User/node dashboard
-- ** `marketplace.html`** - Marketplace for buying/selling materials
-- ** `compliance.html`** - EPR compliance & traceability information
-- ** `about.html`** - About the project
+## Project Structure
+```text
+Kanairo-Klean/
+├── public/
+│   ├── data/
+│   │   └── site-data.json       # Centralized platform static data
+│   └── favicon.ico
+├── src/
+│   ├── components/
+│   │   ├── Header.jsx           # Global SPA Navigation with React Router
+│   │   └── Footer.jsx
+│   ├── css/
+│   │   ├── styles.css           # Global typography, colors & variables
+│   │   ├── dashboard.css        # Scoped CSS grid-shell layouts
+│   │   └── responsive.css       # Layout media queries
+│   ├── hooks/
+│   │   └── useScrollReveal.jsx  # Intersection observer hook for viewport triggers
+│   ├── pages/
+│   │   ├── Home.jsx             # Platform landing page
+│   │   ├── About.jsx            # Platform mission & objectives
+│   │   ├── Compliance.jsx       # EPR compliance tools & details
+│   │   ├── Dashboard.jsx        # Node operator panel (sticky flex-aside layout)
+│   │   └── Marketplace.jsx      # Active listings & pricing interface
+│   ├── utils/
+│   │   └── dataLoader.jsx       # Cached module-level Promise loader for site-data
+│   ├── App.jsx                  # React Router configuration & path mappings
+│   └── main.jsx                 # Vite application entry point
+├── package.json                 # Dependency manifests (React, Router, Recharts, Lucide)
+├── vite.config.js               # Vite compilation profiles
+└── README.md
+```
 
 
-## Core Scripts
-- **`analytics.js`** — Tracking and reporting on platform metrics
-- **`inventory.js`** — Digital inventory and material hotspot logging
-- **`marketplace.js`** — Marketplace logic (pricing, listings, transactions)
-- **`payments.js`** — Automated M-Pesa payout integration
+## Tech Stack & Dependencies
+- **Core Engine:** React 18 / Vite (Single Page Application architecture)
+- **Routing:** `react-router-dom` (Dynamic client-side transitions)
+- **Icons:** `lucide-react` (SVG-based system icons)
+- **Analytics:** `recharts` (Declarative interactive node-dashboard visualizers)
 
 
 ## Key Metrics We are Targeting
@@ -72,30 +71,33 @@ Currently, two official plugins are available:
 - 📦 **Supply Predictability** — Reduced supply shocks for industrial recyclers
 - ✅ **Traceability** — 100% material traceability from collector to plant
 
+
 ## Getting Started
 
-1. Clone the repository
-```bash
-   git clone <your-repo-url>
-   cd KANAIRO-KLEAN
-```
-2. Open `index.html` in your browser, or serve the folder with a local server:
-```bash
-   npx serve .
-```
+### Prerequisites
+Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/maishamagicast/Kanairo-Klean.git](https://github.com/maishamagicast/Kanairo-Klean.git)
+   cd Kanairo-Klean
+   ```
+
+2. Install the application dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Spin up the local development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open the browser and navigate to the local server port provided by Vite (typically `http://localhost:5173`).
+
 
 ## Revenue Model
-
-- **Marketplace Efficiency** — Capturing value by replacing inefficient brokerage with a streamlined digital system.
-- **Traceability Data** — Providing verified data to meet 2026 EPR compliance requirements.
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Marketplace Efficiency** — Capturing transactional micro-fees by replacing inefficient manual brokerage structures with a streamlined digital escrow system.
+- **Traceability Data** — Offering enterprise SaaS API access to verified logistics audit logs to fulfill corporate 2026 EPR compliance requirements.
+```
